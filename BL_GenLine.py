@@ -1,6 +1,7 @@
 import bpy
 from bpy.types import Operator
 
+from . BL_Panel import * #
 from . BL_EdgesGen import EdgesGen
 
 
