@@ -29,15 +29,15 @@ class EdgesGen:
         edges = self.random_edges()
         faces = [] #faces = [(0,1,2,3)]
 
-        col_name="0AutoMech"#设置集合名字
+        col_name="0AutoMech"#1设置集合名字
 
         MyMesh = bpy.data.meshes.new(self.name)#Name in edit mesh
         MyObject = bpy.data.objects.new(MyMesh.name, MyMesh)#name in object
         
-        cube_collection = self.find_collection(bpy.context, MyObject)#通过函数find_collection制作合集
-        new_collection = self.make_collection(col_name,cube_collection)#NEW col 将合集交给1GenLine
+        cube_collection = find_collection(bpy.context, MyObject)#2通过函数find_collection制作合集
+        new_collection = make_collection(col_name,cube_collection)#3NEW col 将合集交给1GenLine
 
-        col = bpy.data.collections.get(col_name)
+        col = bpy.data.collections.get(col_name)#4
         col.objects.link(MyObject)
         bpy.context.view_layer.objects.active = MyObject
         MyObject.select_set(True)#选择生成的所有物体
@@ -79,7 +79,7 @@ class EdgesGen:
             u = e
             v = u + 1
             rand_edges.append((u,v))
-        print(rand_edges)
+        #print(rand_edges)
         self.edges = rand_edges
         return self.edges
         
@@ -87,7 +87,7 @@ class EdgesGen:
 #myedges = EdgesGen(None,-5,5,10,(0,0,0))
 #myedges.add_EdgeMesh()#组成头部等身体各部位
 
-
+'''
     def find_collection(self, context, item):
         collections = item.users_collection
         if len(collections) > 0:
@@ -101,3 +101,4 @@ class EdgesGen:
             new_collection = bpy.data.collections.new(collection_name)
             parent_collection.children.link(new_collection)
             return new_collection
+'''

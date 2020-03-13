@@ -15,6 +15,7 @@ from bpy.props import *
 
 from . BL_Panel import AutoMechPanel
 from . BL_GenLine import GenLine
+from . BL_GenMech import GenMech
 from . BL_EdgesGen import EdgesGen
 
 from bpy.types import Panel,Operator
@@ -22,7 +23,7 @@ from bpy.types import Panel,Operator
 
 
 
-classes = ( AutoMechPanel, GenLine)
+classes = ( AutoMechPanel, GenLine, GenMech)
 register, unregister = bpy.utils.register_classes_factory(classes)
 #def register():
     #bpy.utils.register_class(AutoMechPanel)

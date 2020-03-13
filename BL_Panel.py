@@ -1,5 +1,6 @@
 import bpy
 from . BL_GenLine import GenLine
+from . BL_GenMech import GenMech
 from bpy.types import Panel,Operator
 
 
@@ -15,4 +16,9 @@ class AutoMechPanel(bpy.types.Panel):
         col = layout.column(align=True)
         row = col.row(align=True)
         # invoke custom operator
-        row.operator("object.bl_genline" , text = "Gen Line")
+        row.operator("object.bl_genline" , text = "1.Gen Line")
+
+        col = layout.column(align=True)
+        row = col.row(align=True)
+        # invoke custom operator
+        row.operator("object.bl_genmech" , text = "2.Gen Mech")

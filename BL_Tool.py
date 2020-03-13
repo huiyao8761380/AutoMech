@@ -13,3 +13,35 @@ def make_collection(collection_name, parent_collection):
         new_collection = bpy.data.collections.new(collection_name)
         parent_collection.children.link(new_collection)
         return new_collection
+
+def find_object(find_name,old_col,new_col):#是调用上面两个函数的函数，所有输入都为’‘ 或“”
+    genLine_result = bpy.data.collections[old_col]#在这个合集中找到所有物体，修改这里的合集0AutoMech
+    if len(genLine_result.objects) > 0:#如果在当前Collection中有物体
+        for childObject in genLine_result.objects:
+            #此处添加的代码判断它的名字来获取
+            if find_name in childObject.name:#如果该物体的名字中出现Cube
+                childObject.select_set(True)#选择所有找到有cube字符的物体
+                cube = bpy.data.objects[childObject.name]#选择这些物体并赋值给cube
+        #cube = bpy.data.objects["Cube.001"]
+                cube_collection = find_collection(bpy.context, cube)#通过函数find_collection制作合集
+                new_collection = make_collection(new_col, cube_collection)#NEW col 将合集交给1GenLine
+                # Step 2
+                #if aready in coll
+                new_collection.objects.link(cube)  # put the cube in the new collection 从新合集中添加物体
+                cube_collection.objects.unlink(cube)  # remove it from the old collection 从旧合集中删除物体
+                cube.name = new_col
+
+'''
+def rename_object(new_name):
+    #thisobj = bpy.context.view_layer.objects.active
+    #old_name=thisobj.name
+    #old_name=new_name
+    genMech_result = bpy.data.collections['2GenMech']
+    if len(genMech_result.objects) > 0:#如果在当前Collection中有物体
+        for childObject in genMech_result.objects:
+            #此处添加的代码判断它的名字来获取
+            if 'EdgesGen' in childObject.name:#如果该物体的名字中出现Cube
+                childObject.select_set(True)#选择所有找到有cube字符的物体
+                cube = bpy.data.objects[childObject.name]
+                cube.name = new_name
+'''
