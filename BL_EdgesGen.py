@@ -1,0 +1,103 @@
+import bpy
+import random
+
+from . BL_Tool import *
+#import numpy as np
+#from random import random, randint 这代码也是看起来人模狗样的啊
+#scene = bpy.context.scene
+class EdgesGen:
+    def __init__(self,name,BaseMin,BaseMax,vNumber,location):
+        if name is None:
+            name = "EdgesGen"
+        self.name = name
+        #调参数区
+        self.BaseMin = BaseMin#-5
+        self.BaseMax = BaseMax#5
+        self.vNumber = vNumber#10
+
+        self.ENumber = self.vNumber - 1
+        self.location = location
+
+        self.verts = []
+        self.edges = []
+        self.faces = []
+        
+
+
+    def add_EdgeMesh(self):#默认位置location=(0,0,0)
+        verts = self.random_verts()    #Define vertices and faces
+        edges = self.random_edges()
+        faces = [] #faces = [(0,1,2,3)]
+
+        col_name="0AutoMech"#设置集合名字
+
+        MyMesh = bpy.data.meshes.new(self.name)#Name in edit mesh
+        MyObject = bpy.data.objects.new(MyMesh.name, MyMesh)#name in object
+        
+        cube_collection = self.find_collection(bpy.context, MyObject)#通过函数find_collection制作合集
+        new_collection = self.make_collection(col_name,cube_collection)#NEW col 将合集交给1GenLine
+
+        col = bpy.data.collections.get(col_name)
+        col.objects.link(MyObject)
+        bpy.context.view_layer.objects.active = MyObject
+        MyObject.select_set(True)#选择生成的所有物体
+        MyMesh.from_pydata(verts, edges, faces)#Create mesh
+        MyObject.location = self.location#Set location and scene of object
+        MyMesh.update(calc_edges=True)#
+        #self.MyObject = MyObject
+        #return self.MyObject
+
+
+
+
+    def random_verts(self):#把上面的变量传进来
+        rand_verts = []
+        xu=random.randint(self.BaseMin,0)#暂不传值
+        yu=random.randint(self.BaseMin,0)
+        zu=random.randint(self.BaseMin,0)
+
+        xv=random.randint(0, self.BaseMax)
+        yv=random.randint(0, self.BaseMax)
+        zv=random.randint(0, self.BaseMax)
+
+        x_u,y_u,z_u = self.BaseMin+xu,self.BaseMin+yu,self.BaseMin+zu
+        x_v,y_v,z_v = self.BaseMax+xv,self.BaseMax+yv,self.BaseMax+zv
+        for v in range(self.vNumber):
+        #random.uniform(1,5.0) random.randint(self.BaseMin, self.BaseMax) random.random()
+            x = random.randint(x_u,x_v)
+            y = random.randint(y_u,y_v)
+            z = random.randint(y_u,y_v)
+            rand_verts.append((x,y,z))
+        
+        self.verts = rand_verts    #old_verts = random.shuffle(old_verts)
+        return self.verts
+        
+
+    def random_edges(self):
+        rand_edges = []
+        for e in range(self.ENumber):
+            u = e
+            v = u + 1
+            rand_edges.append((u,v))
+        print(rand_edges)
+        self.edges = rand_edges
+        return self.edges
+        
+
+#myedges = EdgesGen(None,-5,5,10,(0,0,0))
+#myedges.add_EdgeMesh()#组成头部等身体各部位
+
+
+    def find_collection(self, context, item):
+        collections = item.users_collection
+        if len(collections) > 0:
+            return collections[0]
+        return context.scene.collection
+
+    def make_collection(self, collection_name, parent_collection):
+        if collection_name in bpy.data.collections:
+            return bpy.data.collections[collection_name]
+        else:
+            new_collection = bpy.data.collections.new(collection_name)
+            parent_collection.children.link(new_collection)
+            return new_collection
