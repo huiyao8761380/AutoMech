@@ -56,6 +56,11 @@ class EdgesGen:
         yu=random.randint(self.BaseMin,0)
         zu=random.randint(self.BaseMin,0)
 
+        #zu=random.randint(self.BaseMin,0)
+
+        #xv=random.randint(0, self.BaseMax)
+
+
         xv=random.randint(0, self.BaseMax)
         yv=random.randint(0, self.BaseMax)
         zv=random.randint(0, self.BaseMax)

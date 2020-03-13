@@ -1,11 +1,13 @@
 import bpy
 from . BL_GenLine import GenLine 
 from . BL_GenMech import GenMech
+from . BL_EdgesGen import EdgesGen
+
 from bpy.types import Panel,Operator,PropertyGroup
 from bpy.props import FloatProperty, PointerProperty
 
 
-
+'''
 SamplePropertyGroup = type(
     "SamplePropertyGroup",
     (PropertyGroup,),
@@ -15,6 +17,7 @@ SamplePropertyGroup = type(
         "y": FloatProperty(name="scale_Y", default=1.0),
         "z": FloatProperty(name="scale_Z", default=1.0)
     })
+'''
 
 class AutoMechPanel(bpy.types.Panel):
     bl_label = "Auto Mech"
@@ -30,10 +33,10 @@ class AutoMechPanel(bpy.types.Panel):
 
         sampleProperty = context.scene.samplePropertyGroup
 
-        col.prop(sampleProperty, "sigma")
-        col.prop(sampleProperty, "x")
-        col.prop(sampleProperty, "y")
-        col.prop(sampleProperty, "z")
+        col.prop(sampleProperty, "edgeName")
+        col.prop(sampleProperty, "edgeMin")
+        col.prop(sampleProperty, "edgeMax")
+        col.prop(sampleProperty, "edgeVNumber")
         # invoke custom operator
         col = layout.column(align=True)
         row.operator("object.bl_genline" , text = "1.Gen Line")

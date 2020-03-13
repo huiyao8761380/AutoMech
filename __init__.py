@@ -13,14 +13,25 @@ import bpy
 from bpy.utils import register_class, unregister_class
 from bpy.props import *
 
+#from bpy.types import PropertyGroup
+#from bpy.props import FloatProperty, PointerProperty,StringProperty
+
 from . BL_Panel import *
 from . BL_GenLine import GenLine
 from . BL_GenMech import GenMech
 from . BL_EdgesGen import EdgesGen
 
-from bpy.types import Panel,Operator
+from bpy.types import Panel,Operator,PropertyGroup
 
-
+SamplePropertyGroup = type(
+    "SamplePropertyGroup",
+    (PropertyGroup,),
+    {
+        "edgeName": StringProperty(name="edgeName", default='1GenLine'),
+        "edgeMin": IntProperty(name="edgeMin", default=-5),
+        "edgeMax": IntProperty(name="edgeMax", default=5),
+        "edgeVNumber": IntProperty(name="edgeVNumber", default=10)
+    })
 
 
 classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup)
@@ -37,7 +48,7 @@ def unregister():
     from bpy.utils import unregister_class
     for cls in reversed(classes):
         unregister_class(cls)
-    del bpy.types.Scene.samplePropertyGroup
+    bpy.types.Scene.samplePropertyGroup
 #bpy.types.Scene.samplePropertyGroup = PointerProperty(type=SamplePropertyGroup)
 #def register():
     #bpy.utils.register_class(AutoMechPanel)
