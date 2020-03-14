@@ -35,98 +35,97 @@ class GenMech(bpy.types.Operator):
 
             if Skin:
                 ob.modifiers.remove(Skin)
-                #bpy.ops.object.modifier_add(type='SKIN')
-            bpy.ops.object.modifier_add(type='SKIN')
+            mod_Skin = ob.modifiers.new("Skin", "SKIN")
 
             if Remesh:
                 ob.modifiers.remove(Remesh)
-            bpy.ops.object.modifier_add(type='REMESH')
-            bpy.context.object.modifiers["Remesh"].mode = 'SMOOTH'
+            #bpy.ops.object.modifier_add(type='REMESH')
+            mod_Remesh = ob.modifiers.new("Remesh", "REMESH")
+            mod_Remesh.mode = 'SMOOTH'
             #bpy.context.object.modifiers["Remesh"].mode = 'SHARP'
-            bpy.context.object.modifiers["Remesh"].octree_depth = 6 #
-            bpy.context.object.modifiers["Remesh"].scale = 0.88 #0.75
+            mod_Remesh.octree_depth = 6 #
+            mod_Remesh.scale = 0.88 #0.75
 
             if Bevel:
                 ob.modifiers.remove(Bevel)
-            bpy.ops.object.modifier_add(type='BEVEL')
-            bpy.context.object.modifiers["Bevel"].offset_type = 'PERCENT'
-            bpy.context.object.modifiers["Bevel"].width_pct = 37 #动画
-            bpy.context.object.modifiers["Bevel"].use_only_vertices = True
-            bpy.context.object.modifiers["Bevel"].use_clamp_overlap = True
-            bpy.context.object.modifiers["Bevel"].loop_slide = True
-            bpy.context.object.modifiers["Bevel"].material = -1         #0
+            mod_Bevel = ob.modifiers.new("Bevel", "BEVEL")
+            mod_Bevel.offset_type = 'PERCENT'
+            mod_Bevel.width_pct = 37 #动画
+            mod_Bevel.use_only_vertices = True
+            mod_Bevel.use_clamp_overlap = True
+            mod_Bevel.loop_slide = True
+            mod_Bevel.material = -1         #0
                 
 
             if Decimate:
                 ob.modifiers.remove(Decimate)
-            bpy.ops.object.modifier_add(type='DECIMATE')
-            bpy.context.object.modifiers["Decimate"].ratio = 0.02
+            mod_Decimate = ob.modifiers.new("Decimate", "DECIMATE")
+            mod_Decimate.ratio = 0.02
 
             if Decimate2:
                 ob.modifiers.remove(Decimate2)
-            bpy.ops.object.modifier_add(type='DECIMATE')
-            bpy.context.object.modifiers["Decimate.001"].decimate_type = 'DISSOLVE'
-            bpy.context.object.modifiers["Decimate.001"].delimit = {'MATERIAL'}
+            mod_Decimate2 = ob.modifiers.new("Decimate.001", "DECIMATE")
+            mod_Decimate2.decimate_type = 'DISSOLVE'
+            mod_Decimate2.delimit = {'MATERIAL'}
 
             if Bevel1:
                 ob.modifiers.remove(Bevel1)
-            bpy.ops.object.modifier_add(type='BEVEL')
-            bpy.context.object.modifiers["Bevel.001"].offset_type = 'PERCENT'
-            bpy.context.object.modifiers["Bevel.001"].width_pct = 33
-            bpy.context.object.modifiers["Bevel.001"].use_only_vertices = True
-            bpy.context.object.modifiers["Bevel.001"].use_clamp_overlap = True
-            bpy.context.object.modifiers["Bevel.001"].loop_slide = True
-            bpy.context.object.modifiers["Bevel.001"].material = 0         #1
+            mod_Bevel1 = ob.modifiers.new("Bevel.001", "BEVEL")
+            mod_Bevel1.offset_type = 'PERCENT'
+            mod_Bevel1.width_pct = 33
+            mod_Bevel1.use_only_vertices = True
+            mod_Bevel1.use_clamp_overlap = True
+            mod_Bevel1.loop_slide = True
+            mod_Bevel1.material = 0         #1
 
             if EdgeSplit:
                 ob.modifiers.remove(EdgeSplit)
-            bpy.ops.object.modifier_add(type='EDGE_SPLIT')
+            mod_EdgeSplit = ob.modifiers.new("EdgeSplit", "EDGE_SPLIT")
 
             if Solidify:
                 ob.modifiers.remove(Solidify)
-            bpy.ops.object.modifier_add(type='SOLIDIFY')
-            bpy.context.object.modifiers["Solidify"].thickness = -0.02
-            bpy.context.object.modifiers["Solidify"].use_rim_only = True
-            bpy.context.object.modifiers["Solidify"].material_offset_rim = 0  #1
+            mod_Solidify = ob.modifiers.new("Solidify", "SOLIDIFY")
+            mod_Solidify.thickness = -0.02
+            mod_Solidify.use_rim_only = True
+            mod_Solidify.material_offset_rim = 0  #1
 
 
             if Bevel2:
                 ob.modifiers.remove(Bevel2)
-            bpy.ops.object.modifier_add(type='BEVEL')
-            bpy.context.object.modifiers["Bevel.002"].offset_type = 'OFFSET'
-            bpy.context.object.modifiers["Bevel.002"].width = 0.05
-            bpy.context.object.modifiers["Bevel.002"].material = -1             #
+            mod_Bevel2 = ob.modifiers.new("Bevel.002", "BEVEL")
+            mod_Bevel2.offset_type = 'OFFSET'
+            mod_Bevel2.width = 0.05
+            mod_Bevel2.material = -1             #
 
             if Mirror:
                 ob.modifiers.remove(Mirror)
-            bpy.ops.object.modifier_add(type='MIRROR')
+            mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
 
             if Displace:
                 ob.modifiers.remove(Displace)
-            bpy.ops.object.modifier_add(type='DISPLACE')
-            bpy.context.object.modifiers["Displace"].direction = 'NORMAL'
-            bpy.context.object.modifiers["Displace"].mid_level = 0.5
-            bpy.context.object.modifiers["Displace"].strength = 0.05
+            mod_Displace = ob.modifiers.new("Displace", "DISPLACE")
+            mod_Displace.direction = 'NORMAL'
+            mod_Displace.mid_level = 0.5
+            mod_Displace.strength = 0.05
 
-            bpy.context.object.modifiers["Skin"].show_expanded = True
-            bpy.context.object.modifiers["Bevel"].show_in_editmode = False
-            bpy.context.object.modifiers["Bevel.001"].show_in_editmode = False
-            bpy.context.object.modifiers["EdgeSplit"].show_in_editmode = False
-            bpy.context.object.modifiers["Solidify"].show_in_editmode = False
-            bpy.context.object.modifiers["Bevel.002"].show_in_editmode = False
+            mod_Skin.show_expanded = True
+            mod_Bevel.show_in_editmode = False
+            mod_Bevel1.show_in_editmode = False
+            mod_EdgeSplit.show_in_editmode = False
+            mod_Solidify.show_in_editmode = False
+            mod_Bevel2.show_in_editmode = False
 
-
-            bpy.context.object.modifiers["Skin"].show_expanded = False
-            bpy.context.object.modifiers["Remesh"].show_expanded = False
-            bpy.context.object.modifiers["Bevel"].show_expanded = False
-            bpy.context.object.modifiers["Decimate"].show_expanded = False
-            bpy.context.object.modifiers["Decimate.001"].show_expanded = False
-            bpy.context.object.modifiers["Bevel.001"].show_expanded = False
-            bpy.context.object.modifiers["EdgeSplit"].show_expanded = False
-            bpy.context.object.modifiers["Solidify"].show_expanded = False
-            bpy.context.object.modifiers["Bevel.002"].show_expanded = False
-            bpy.context.object.modifiers["Mirror"].show_expanded = False
-            bpy.context.object.modifiers["Displace"].show_expanded = False
+            mod_Skin.show_expanded = False
+            mod_Remesh.show_expanded = False
+            mod_Bevel.show_expanded = False
+            mod_Decimate.show_expanded = False
+            mod_Decimate2.show_expanded = False
+            mod_Bevel1.show_expanded = False
+            mod_EdgeSplit.show_expanded = False
+            mod_Solidify.show_expanded = False
+            mod_Bevel2.show_expanded = False
+            mod_Mirror.show_expanded = False
+            mod_Displace.show_expanded = False
 
 
 

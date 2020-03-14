@@ -2,9 +2,9 @@ import bpy
 from . BL_GenLine import GenLine 
 from . BL_GenMech import GenMech
 from . BL_EdgesGen import EdgesGen
-
 from bpy.types import Panel,Operator,PropertyGroup
 from bpy.props import FloatProperty, PointerProperty
+from . BL_Properties import AMProperties
 
 
 class AutoMechPanel(bpy.types.Panel):
@@ -16,27 +16,28 @@ class AutoMechPanel(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        col = layout.column(align=True)
-        row = col.row(align=True)
+        #col = layout.column(align=True)
+        row = layout.row(align=True)
 
-        sampleProperty = context.scene.samplePropertyGroup
+        sampleProperty = bpy.context.scene.sampleProperty
+        amProperty = context.scene.amProperties
 
         #col.prop(sampleProperty, "edgeName")
         row.prop(sampleProperty, "edgeMin")
         row.prop(sampleProperty, "edgeMax")
         row.prop(sampleProperty, "edgeVNumber")
 
-        col5 = layout.column(align=True)
-        row5 = col5.row(align=True)
+        #col5 = layout.column(align=True)
+        row5 = layout.row(align=True)
 
         row5.prop(sampleProperty, "edgeXYZ")
         row5.prop(sampleProperty, "edgeLocBool")
         row5.prop(sampleProperty, "LocEditBool")
 
-        col2 = layout.column(align=True)
-        row2 = col2.row(align=True)
-        col3 = layout.column(align=True)
-        row3 = col3.row(align=True)
+        #col2 = layout.column(align=True)
+        row2 = layout.row(align=True)
+        #col3 = layout.column(align=True)
+        row3 = layout.row(align=True)
 
         if sampleProperty.edgeXYZ == True:
             row2.prop(sampleProperty, "xuMin")
@@ -47,11 +48,11 @@ class AutoMechPanel(bpy.types.Panel):
             row3.prop(sampleProperty, "yvMax")
             row3.prop(sampleProperty, "zvMax")
 
-        col4 = layout.column(align=True)
-        row4 = col4.row(align=True)
+        col4 = layout.column()
+        #row4 = col4.row(align=True)
 
         if sampleProperty.edgeLocBool == True:
-            col4.prop(sampleProperty, "edgeLoc")
+            col4.prop(sampleProperty, "edgeLoc")#row4
         
             #sampleProperty.edgeLoc = (0,0,0)
 
@@ -59,13 +60,13 @@ class AutoMechPanel(bpy.types.Panel):
             col4.prop(sampleProperty, "LocEdit")
 
         # invoke custom operator
-        col = layout.column(align=True)
-        col.operator("object.bl_genline" , text = "1.Gen Line")
+        #col = layout.column(align=True)
+        col4.operator("object.bl_genline" , text = "1.Gen Line")
 
+        col6 = layout.column(align=True)
+        row6 = col6.row(align=True)
 
-        row = col.row(align=True)
-        # invoke custom operator
-        row.operator("object.bl_genmech" , text = "2.Gen Mech")
-
+        #row6.prop(amProperty, "GenMechMirrorBoll")
         
+        col6.operator("object.bl_genmech" , text = "2.Gen Mech")
 

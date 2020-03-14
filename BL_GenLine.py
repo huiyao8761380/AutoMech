@@ -17,7 +17,8 @@ class GenLine(bpy.types.Operator):
 
 
     def execute(self, context):
-        sampleProperty = context.scene.samplePropertyGroup
+        sampleProperty = context.scene.sampleProperty
+        amProperty = context.scene.amProperties
         edgeName= "1GenLine" #sampleProperty.edgeName
         edgeMin = sampleProperty.edgeMin
         edgeMax = sampleProperty.edgeMax
