@@ -25,7 +25,7 @@ class AMProperties(PropertyGroup):
         description="GenLineEnum",
         items=[
             ('GenLineOnly', "GenLineOnly", ""),
-            ('GenLineMechBody', "GenLineMechBody", "")
+            ('GenLineMechBody', "Custom GenLineMechBody", "")
             #('MODE_GD_MARBLE', "大理石 Marble", ""),
             #('MODE_GD_MUSGRAVE', "马斯格雷夫分形 Musgrave", "")
         ],

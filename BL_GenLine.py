@@ -35,9 +35,31 @@ class GenLine(bpy.types.Operator):
 
         elif amProperty.GenLineEnum =='GenLineMechBody':
             edgeName= "1GenLineBody"
-            edgeMin = sampleProperty.edgeMin
-            edgeMax = sampleProperty.edgeMax
-            edgeVNumber = sampleProperty.edgeVNumber
+            edgeMin = 0
+            edgeMax = 0
+            edgeVNumber = 10
+            edgeLocation = (1,0,0)
+
+            sampleProperty.edgeXYZ =True
+            sampleProperty.xuMin = 0
+            sampleProperty.yuMin = -0.3
+            sampleProperty.zuMin = 3
+            sampleProperty.xvMax = 0.2
+            sampleProperty.yvMax = 0
+            sampleProperty.zvMax = 3
+
+            '''
+            xu = 0
+            yu = -0.4
+            zu = 0
+
+            xv = 0.1
+            yv = 0
+            zv = 3
+            '''
+            genLeg = EdgesGen(edgeName,edgeMin,edgeMax,edgeVNumber,edgeLocation)
+            genLeg.add_EdgeMesh()
+
 
 
         if sampleProperty.LocEditBool == True:
@@ -45,11 +67,14 @@ class GenLine(bpy.types.Operator):
             #bpy.context.active_object
             #bpy.context.selected_objects
             #sel.mode_set(mode='EDIT')
+            bpy.ops.object.mode_set(mode='OBJECT')
             bpy.ops.object.select_all(action='DESELECT')
             bpy.context.active_object
             bpy.ops.object.mode_set(mode='EDIT')
             bpy.ops.transform.translate(value=sampleProperty.LocEdit)
             bpy.ops.object.mode_set(mode='OBJECT')
+
+            #bpy.ops.transform.resize(value=(1, 1, 2.63777))
 
 
         self.report({'INFO'}, "1.Gen Line:bpy.ops.object.bl_genline()")

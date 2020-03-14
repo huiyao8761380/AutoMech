@@ -34,40 +34,40 @@ class AutoMechPanel(bpy.types.Panel):
         col5.prop(amProperty, "GenLineEnum")
         col5.operator("object.bl_genline" , text = "1.Gen Line")
 
-        if amProperty.GenLineEnum =='GenLineOnly':
+        #if amProperty.GenLineEnum =='GenLineOnly':
             
             #col.prop(sampleProperty, "edgeName")
-            row.prop(sampleProperty, "edgeMin")
-            row.prop(sampleProperty, "edgeMax")
-            row.prop(sampleProperty, "edgeVNumber")
+        row.prop(sampleProperty, "edgeMin")
+        row.prop(sampleProperty, "edgeMax")
+        row.prop(sampleProperty, "edgeVNumber")
 
             #col5 = layout.column(align=True)
 
 
-            row5.prop(sampleProperty, "edgeXYZ")
-            row5.prop(sampleProperty, "edgeLocBool")
-            row5.prop(sampleProperty, "LocEditBool")
+        row5.prop(sampleProperty, "edgeXYZ")
+        row5.prop(sampleProperty, "edgeLocBool")
+        row5.prop(sampleProperty, "LocEditBool")
 
 
 
-            if sampleProperty.edgeXYZ == True:
-                row2.prop(sampleProperty, "xuMin")
-                row2.prop(sampleProperty, "yuMin")
-                row2.prop(sampleProperty, "zuMin")
+        if sampleProperty.edgeXYZ == True:
+            row2.prop(sampleProperty, "xuMin")
+            row2.prop(sampleProperty, "yuMin")
+            row2.prop(sampleProperty, "zuMin")
 
-                row3.prop(sampleProperty, "xvMax")
-                row3.prop(sampleProperty, "yvMax")
-                row3.prop(sampleProperty, "zvMax")
+            row3.prop(sampleProperty, "xvMax")
+            row3.prop(sampleProperty, "yvMax")
+            row3.prop(sampleProperty, "zvMax")
 
 
 
-            if sampleProperty.edgeLocBool == True:
-                col4.prop(sampleProperty, "edgeLoc")
+        if sampleProperty.edgeLocBool == True:
+            col4.prop(sampleProperty, "edgeLoc")
             
                 #sampleProperty.edgeLoc = (0,0,0)
 
-            if sampleProperty.LocEditBool == True:
-                col4.prop(sampleProperty, "LocEdit")
+        if sampleProperty.LocEditBool == True:
+            col4.prop(sampleProperty, "LocEdit")
 
         # invoke custom operator
 

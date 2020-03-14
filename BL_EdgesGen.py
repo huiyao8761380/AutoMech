@@ -8,7 +8,7 @@ from bpy.props import FloatProperty, PointerProperty,StringProperty
 #from random import random, randint 这代码也是看起来人模狗样的啊
 #scene = bpy.context.scene
 class EdgesGen:
-    def __init__(self,name,BaseMin,BaseMax,vNumber,location):
+    def __init__(self,name,BaseMin,BaseMax,vNumber,location):#,xu,yu,zu,xv,yv,zv
         if name is None:
             name = "EdgesGen"
         self.name = name
@@ -19,7 +19,14 @@ class EdgesGen:
 
         self.ENumber = self.vNumber - 1
         self.location = location
-
+        '''
+        self.xu = xu
+        self.yu = yu
+        self.zu = zu
+        self.xv = xv
+        self.yv = yv
+        self.zv = zv
+        '''
         self.verts = []
         self.edges = []
         self.faces = []
@@ -58,6 +65,7 @@ class EdgesGen:
 
         sampleProperty = bpy.context.scene.samplePropertyGroup
 
+        #if amProperty.GenLineEnum == 'GenLineOnly':
         if sampleProperty.edgeXYZ == True:
             xu=random.uniform(sampleProperty.xuMin,0)
             yu=random.uniform(sampleProperty.yuMin,0)
@@ -74,6 +82,16 @@ class EdgesGen:
             xv=random.uniform(0, self.BaseMax)
             yv=random.uniform(0, self.BaseMax)
             zv=random.uniform(0, self.BaseMax)
+        '''
+        elif amProperty.GenLineEnum == 'GenLineMechBody':
+            xu=random.uniform(self.xu,0)
+            yu=random.uniform(self.yu,0)
+            zu=random.uniform(self.zu,0)
+
+            xv=random.uniform(0, self.xv)
+            yv=random.uniform(0, self.yv)
+            zv=random.uniform(0, self.zv)
+        '''
 
         x_u,y_u,z_u = self.BaseMin+xu,self.BaseMin+yu,self.BaseMin+zu
         x_v,y_v,z_v = self.BaseMax+xv,self.BaseMax+yv,self.BaseMax+zv
