@@ -35,6 +35,7 @@ class GenMech(bpy.types.Operator):
 
             if Skin:
                 ob.modifiers.remove(Skin)
+                #bpy.ops.object.modifier_add(type='SKIN')
             bpy.ops.object.modifier_add(type='SKIN')
 
             if Remesh:

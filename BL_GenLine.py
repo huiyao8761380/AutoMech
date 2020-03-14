@@ -18,13 +18,29 @@ class GenLine(bpy.types.Operator):
 
     def execute(self, context):
         sampleProperty = context.scene.samplePropertyGroup
-        edgeName=sampleProperty.edgeName
+        edgeName= "1GenLine" #sampleProperty.edgeName
         edgeMin = sampleProperty.edgeMin
         edgeMax = sampleProperty.edgeMax
         edgeVNumber = sampleProperty.edgeVNumber
-        edgeLocation = (0,0,0)
+        if sampleProperty.edgeLocBool == True:
+            edgeLocation = sampleProperty.edgeLoc
+        else:
+            edgeLocation = (0,0,0)
+
         myedges = EdgesGen(edgeName,edgeMin,edgeMax,edgeVNumber,edgeLocation)
         myedges.add_EdgeMesh()#组成头部等身体各部位
+
+
+        if sampleProperty.LocEditBool == True:
+            #bpy.ops.object.select_set(True)
+            #bpy.context.active_object
+            #bpy.context.selected_objects
+            #sel.mode_set(mode='EDIT')
+            bpy.ops.object.select_all(action='DESELECT')
+            bpy.context.active_object
+            bpy.ops.object.mode_set(mode='EDIT')
+            bpy.ops.transform.translate(value=sampleProperty.LocEdit)
+            bpy.ops.object.mode_set(mode='OBJECT')
         #col = bpy.ops.collection.create(name="GenCol")
         #if col != bpy.data.collections.get(name="GenCol"):
             #col.objects.link(MyObject)

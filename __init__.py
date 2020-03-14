@@ -27,10 +27,21 @@ SamplePropertyGroup = type(
     "SamplePropertyGroup",
     (PropertyGroup,),
     {
-        "edgeName": StringProperty(name="edgeName", default='1GenLine'),
-        "edgeMin": IntProperty(name="edgeMin", default=-5),
-        "edgeMax": IntProperty(name="edgeMax", default=5),
-        "edgeVNumber": IntProperty(name="edgeVNumber", default=10)
+        "edgeName": StringProperty(name="NameEdge", default='1GenLine'),
+        "edgeMin": IntProperty(name="MinEdge", default=-5),
+        "edgeMax": IntProperty(name="MaxEdge", default=5),
+        "edgeVNumber": IntProperty(name="VNumberedge", default=10),
+        "edgeXYZ": BoolProperty(name="edgeXYZ", default=False),
+        "xuMin": FloatProperty(name="xuMin", default=-1),
+        "yuMin": FloatProperty(name="yuMin", default=-1),
+        "zuMin": FloatProperty(name="zuMin", default=-1),
+        "xvMax": FloatProperty(name="xvMax", default=1),
+        "yvMax": FloatProperty(name="yvMax", default=1),
+        "zvMax": FloatProperty(name="zvMax", default=1),
+        "edgeLoc": IntVectorProperty(name="LocEdge", default=(0,0,0)),
+        "edgeLocBool": BoolProperty(name="LocEdge", default=False),
+        "LocEdit": FloatVectorProperty(name="LocEdit", default=(0,0,0)),
+        "LocEditBool": BoolProperty(name="LocEdit", default=False)
     })
 
 
@@ -48,7 +59,7 @@ def unregister():
     from bpy.utils import unregister_class
     for cls in reversed(classes):
         unregister_class(cls)
-    bpy.types.Scene.samplePropertyGroup
+    del bpy.types.Scene.samplePropertyGroup
 #bpy.types.Scene.samplePropertyGroup = PointerProperty(type=SamplePropertyGroup)
 #def register():
     #bpy.utils.register_class(AutoMechPanel)

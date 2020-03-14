@@ -7,18 +7,6 @@ from bpy.types import Panel,Operator,PropertyGroup
 from bpy.props import FloatProperty, PointerProperty
 
 
-'''
-SamplePropertyGroup = type(
-    "SamplePropertyGroup",
-    (PropertyGroup,),
-    {
-        "sigma": FloatProperty(name="σ", default=10.0),
-        "x": FloatProperty(name="scale_X", default=1.0),
-        "y": FloatProperty(name="scale_Y", default=1.0),
-        "z": FloatProperty(name="scale_Z", default=1.0)
-    })
-'''
-
 class AutoMechPanel(bpy.types.Panel):
     bl_label = "Auto Mech"
     bl_idname = "Auto_Mech_Panel"
@@ -33,13 +21,46 @@ class AutoMechPanel(bpy.types.Panel):
 
         sampleProperty = context.scene.samplePropertyGroup
 
-        col.prop(sampleProperty, "edgeName")
-        col.prop(sampleProperty, "edgeMin")
-        col.prop(sampleProperty, "edgeMax")
-        col.prop(sampleProperty, "edgeVNumber")
+        #col.prop(sampleProperty, "edgeName")
+        row.prop(sampleProperty, "edgeMin")
+        row.prop(sampleProperty, "edgeMax")
+        row.prop(sampleProperty, "edgeVNumber")
+
+        col5 = layout.column(align=True)
+        row5 = col5.row(align=True)
+
+        row5.prop(sampleProperty, "edgeXYZ")
+        row5.prop(sampleProperty, "edgeLocBool")
+        row5.prop(sampleProperty, "LocEditBool")
+
+        col2 = layout.column(align=True)
+        row2 = col2.row(align=True)
+        col3 = layout.column(align=True)
+        row3 = col3.row(align=True)
+
+        if sampleProperty.edgeXYZ == True:
+            row2.prop(sampleProperty, "xuMin")
+            row2.prop(sampleProperty, "yuMin")
+            row2.prop(sampleProperty, "zuMin")
+
+            row3.prop(sampleProperty, "xvMax")
+            row3.prop(sampleProperty, "yvMax")
+            row3.prop(sampleProperty, "zvMax")
+
+        col4 = layout.column(align=True)
+        row4 = col4.row(align=True)
+
+        if sampleProperty.edgeLocBool == True:
+            col4.prop(sampleProperty, "edgeLoc")
+        
+            #sampleProperty.edgeLoc = (0,0,0)
+
+        if sampleProperty.LocEditBool == True:
+            col4.prop(sampleProperty, "LocEdit")
+
         # invoke custom operator
         col = layout.column(align=True)
-        row.operator("object.bl_genline" , text = "1.Gen Line")
+        col.operator("object.bl_genline" , text = "1.Gen Line")
 
 
         row = col.row(align=True)
