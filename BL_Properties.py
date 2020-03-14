@@ -1,7 +1,7 @@
-#import bpy
-#from bpy.types import Panel,Operator,PropertyGroup
-#from bpy.props import FloatProperty, PointerProperty, EnumProperty, BoolProperty
-
+import bpy
+from bpy.types import Panel,Operator,PropertyGroup
+from bpy.props import FloatProperty, PointerProperty, EnumProperty, BoolProperty
+'''
 import bpy
 from bpy.utils import register_class, unregister_class
 from bpy.props import *
@@ -15,7 +15,7 @@ from . BL_GenMech import GenMech
 from . BL_EdgesGen import EdgesGen
 
 from bpy.types import Panel,Operator,PropertyGroup
-
+'''
 
 
 class AMProperties(PropertyGroup):
@@ -42,10 +42,17 @@ class AMProperties(PropertyGroup):
         name="GenMechEnum",
         description="Gen Mech Enum Modify",
         items=[
-            ('GenMechfy1', "Gen Mechfy style 1", ""),
-            ('GenLineMechBody', "GenLineMechBody", "")
+            ('GenMechfy1', "GenMechfy1", ""),
+            ('GenMechstyle2', "GenMechstyle2", "")
             #('MODE_GD_MARBLE', "大理石 Marble", ""),
             #('MODE_GD_MUSGRAVE', "马斯格雷夫分形 Musgrave", "")
         ],
         default="GenMechfy1"
     )
+
+
+    GenMechApplyBoll: BoolProperty(
+        name="Apply modifiers",
+        description="Aoto Apply modifiers",
+        default = False
+        )

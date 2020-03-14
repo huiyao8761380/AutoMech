@@ -4,6 +4,9 @@ import bpy
 from . BL_Tool import *
 from . BL_EdgesGen import EdgesGen
 
+from bpy.types import Operator,PropertyGroup
+from bpy.props import FloatProperty, PointerProperty,StringProperty
+
 class GenMech(bpy.types.Operator):
     bl_idname = "object.bl_genmech"
     bl_label = "Do Mech Gen"
@@ -14,6 +17,8 @@ class GenMech(bpy.types.Operator):
         find_object('1GenLine','0AutoMech',"2GenMech")
         #rename_object('GenMech')
         sel = bpy.context.selected_objects
+        amProperty = context.scene.amProperties
+
         for ob in sel:
             bpy.context.view_layer.objects.active = ob
             #for mod in [m for m in ob.modifiers if m.type != 'SKIN']:
@@ -97,9 +102,15 @@ class GenMech(bpy.types.Operator):
             mod_Bevel2.width = 0.05
             mod_Bevel2.material = -1             #
 
-            if Mirror:
-                ob.modifiers.remove(Mirror)
-            mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
+
+
+            if amProperty.GenMechMirrorBoll == True:
+                if Mirror:
+                    ob.modifiers.remove(Mirror)
+                mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
+            else:
+                if Mirror:
+                    ob.modifiers.remove(Mirror)
 
             if Displace:
                 ob.modifiers.remove(Displace)
@@ -108,12 +119,17 @@ class GenMech(bpy.types.Operator):
             mod_Displace.mid_level = 0.5
             mod_Displace.strength = 0.05
 
-            mod_Skin.show_expanded = True
+            for mod in ob.modifiers:
+                mod.show_expanded = False
+                mod.show_in_editmode = False
+            '''
+            mod_Skin.show_in_editmode = True
             mod_Bevel.show_in_editmode = False
             mod_Bevel1.show_in_editmode = False
             mod_EdgeSplit.show_in_editmode = False
             mod_Solidify.show_in_editmode = False
             mod_Bevel2.show_in_editmode = False
+
 
             mod_Skin.show_expanded = False
             mod_Remesh.show_expanded = False
@@ -126,6 +142,7 @@ class GenMech(bpy.types.Operator):
             mod_Bevel2.show_expanded = False
             mod_Mirror.show_expanded = False
             mod_Displace.show_expanded = False
+            '''
 
 
 

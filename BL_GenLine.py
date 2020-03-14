@@ -17,19 +17,27 @@ class GenLine(bpy.types.Operator):
 
 
     def execute(self, context):
-        sampleProperty = context.scene.sampleProperty
+        sampleProperty = context.scene.samplePropertyGroup
         amProperty = context.scene.amProperties
-        edgeName= "1GenLine" #sampleProperty.edgeName
-        edgeMin = sampleProperty.edgeMin
-        edgeMax = sampleProperty.edgeMax
-        edgeVNumber = sampleProperty.edgeVNumber
-        if sampleProperty.edgeLocBool == True:
-            edgeLocation = sampleProperty.edgeLoc
-        else:
-            edgeLocation = (0,0,0)
 
-        myedges = EdgesGen(edgeName,edgeMin,edgeMax,edgeVNumber,edgeLocation)
-        myedges.add_EdgeMesh()#组成头部等身体各部位
+        if amProperty.GenLineEnum =='GenLineOnly':
+            edgeName= "1GenLine" #sampleProperty.edgeName
+            edgeMin = sampleProperty.edgeMin
+            edgeMax = sampleProperty.edgeMax
+            edgeVNumber = sampleProperty.edgeVNumber
+            if sampleProperty.edgeLocBool == True:
+                edgeLocation = sampleProperty.edgeLoc
+            else:
+                edgeLocation = (0,0,0)
+
+            myedges = EdgesGen(edgeName,edgeMin,edgeMax,edgeVNumber,edgeLocation)
+            myedges.add_EdgeMesh()#组成头部等身体各部位
+
+        elif amProperty.GenLineEnum =='GenLineMechBody':
+            edgeName= "1GenLineBody"
+            edgeMin = sampleProperty.edgeMin
+            edgeMax = sampleProperty.edgeMax
+            edgeVNumber = sampleProperty.edgeVNumber
 
 
         if sampleProperty.LocEditBool == True:
@@ -42,10 +50,7 @@ class GenLine(bpy.types.Operator):
             bpy.ops.object.mode_set(mode='EDIT')
             bpy.ops.transform.translate(value=sampleProperty.LocEdit)
             bpy.ops.object.mode_set(mode='OBJECT')
-        #col = bpy.ops.collection.create(name="GenCol")
-        #if col != bpy.data.collections.get(name="GenCol"):
-            #col.objects.link(MyObject)
 
-        #myedges.MyObject = bpy.context.object
+
         self.report({'INFO'}, "1.Gen Line:bpy.ops.object.bl_genline()")
         return {'FINISHED'}

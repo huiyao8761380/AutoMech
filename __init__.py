@@ -21,6 +21,7 @@ from . BL_GenLine import GenLine
 from . BL_GenMech import GenMech
 from . BL_EdgesGen import EdgesGen
 from . BL_Properties import AMProperties
+from . BL_Tool import *
 
 from bpy.types import Panel,Operator,PropertyGroup
 
@@ -46,7 +47,7 @@ SamplePropertyGroup = type(
     })
 
 
-classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup, AMProperties)
+classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup, AMProperties, ApplyModify)
 #register, unregister = bpy.utils.register_classes_factory(classes)
 
 

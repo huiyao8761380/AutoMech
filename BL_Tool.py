@@ -31,6 +31,27 @@ def find_object(find_name,old_col,new_col):#是调用上面两个函数的函数
                 cube_collection.objects.unlink(cube)  # remove it from the old collection 从旧合集中删除物体
                 cube.name = new_col
 
+class ApplyModify(bpy.types.Operator):
+    bl_idname = "object.applymodify"
+    bl_label = "Apply Modify"
+    bl_description = "Just Apply Modify Operator" 
+    bl_options = {'REGISTER'}
+
+    def execute(self, context):
+        find_object('2GenMech','2GenMech',"3ApplyMech")
+        #rename_object('GenMech')
+        sel = bpy.context.selected_objects
+        amProperty = context.scene.amProperties
+
+        for ob in sel:
+            bpy.context.view_layer.objects.active = ob
+            #ob.convert(target='MESH')
+            bpy.ops.object.convert(target='MESH')
+        
+        self.report({'INFO'}, "3.Apply Modify Gen Mech: bpy.ops.object.applymodify()")
+        return {'FINISHED'}
+
+
 '''
 def rename_object(new_name):
     #thisobj = bpy.context.view_layer.objects.active

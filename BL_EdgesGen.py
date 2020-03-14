@@ -49,14 +49,14 @@ class EdgesGen:
         #self.MyObject = MyObject
         #return self.MyObject
 
-    #sampleProperty = bpy.context.scene.sampleProperty
+
 
 
     def random_verts(self):#把上面的变量传进来
         rand_verts = []
         amProperty = bpy.context.scene.amProperties
-        sampleProperty = bpy.context.scene.sampleProperty
-        #sampleProperty = context.scene.samplePropertyGroup
+
+        sampleProperty = bpy.context.scene.samplePropertyGroup
 
         if sampleProperty.edgeXYZ == True:
             xu=random.uniform(sampleProperty.xuMin,0)
