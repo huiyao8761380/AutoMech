@@ -25,7 +25,10 @@ class AMProperties(PropertyGroup):
         description="GenLineEnum",
         items=[
             ('GenLineOnly', "GenLineOnly", ""),
-            ('GenLineMechBody', "Custom GenLineMechBody", "")
+            ('GenLineMechBody', "Custom GenLineMechBody", ""),
+            ('GenLineStruct', "GenLineStruct", ""),
+            ('GenLineKit', "GenLineKit", ""),
+            ('GenLineWeapon', "GenLineWeapon", "")
             #('MODE_GD_MARBLE', "大理石 Marble", ""),
             #('MODE_GD_MUSGRAVE', "马斯格雷夫分形 Musgrave", "")
         ],
@@ -43,6 +46,7 @@ class AMProperties(PropertyGroup):
         description="Gen Mech Enum Modify",
         items=[
             ('GenMechfy1', "GenMechfy1", ""),
+            ('GenMechfy2', "GenMechfyLow", ""),
             ('GenMechstyle2', "GenMechstyle2", "")
             #('MODE_GD_MARBLE', "大理石 Marble", ""),
             #('MODE_GD_MUSGRAVE', "马斯格雷夫分形 Musgrave", "")
@@ -54,5 +58,11 @@ class AMProperties(PropertyGroup):
     GenMechApplyBoll: BoolProperty(
         name="Apply modifiers",
         description="Aoto Apply modifiers",
+        default = False
+        )
+
+    GenMechResizeBoll: BoolProperty(
+        name="Resize",
+        description="修改编辑模式下的大小",
         default = False
         )

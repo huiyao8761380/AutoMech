@@ -78,11 +78,12 @@ class AutoMechPanel(bpy.types.Panel):
         # invoke custom operator
         col6.prop(amProperty, "GenMechEnum")
         row6.prop(amProperty, "GenMechMirrorBoll")
+        row6.prop(amProperty, "GenMechResizeBoll")
         #row6.prop(amProperty, "GenMechApplyBoll")
-        row6.operator("object.applymodify" , text = "3.ApplyMechModifiers")
+        
 
 
         col6.operator("object.bl_genmech" , text = "2.Gen Mech")
-
+        col6.operator("object.applymodify" , text = "3.ApplyMechModifiers")
         
 
