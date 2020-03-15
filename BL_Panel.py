@@ -4,6 +4,7 @@ from . BL_GenMech import GenMech
 from . BL_EdgesGen import EdgesGen
 from . BL_Properties import AMProperties
 from . BL_Tool import ApplyModify
+from . BL_MechClean import MechClean
 from bpy.types import Panel,Operator,PropertyGroup
 from bpy.props import FloatProperty, PointerProperty
 
@@ -85,5 +86,6 @@ class AutoMechPanel(bpy.types.Panel):
 
         col6.operator("object.bl_genmech" , text = "2.Gen Mech")
         col6.operator("object.applymodify" , text = "3.ApplyMechModifiers")
+        col6.operator("object.mechclean" , text = "4.MechClean")
         
 
