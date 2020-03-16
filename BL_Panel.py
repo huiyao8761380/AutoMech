@@ -76,16 +76,29 @@ class AutoMechPanel(bpy.types.Panel):
         col6 = layout.column(align=True)
         row6 = col6.row(align=True)
 
-        # invoke custom operator
+        
         col6.prop(amProperty, "GenMechEnum")
         row6.prop(amProperty, "GenMechMirrorBoll")
         row6.prop(amProperty, "GenMechResizeBoll")
+
+        col8 = layout.column(align=True)
+        row8 = col8.row(align=True)
+
+        #GenMechRemeshEnum
+        #row8.prop(amProperty, "GenMechRemeshEnum")
+
         #row6.prop(amProperty, "GenMechApplyBoll")
         
+        col7 = layout.column(align=True)
+        row7 = col7.row(align=True)
 
+        col6.prop(amProperty, "GenMechRemeshEnum")
 
         col6.operator("object.bl_genmech" , text = "2.Gen Mech")
-        col6.operator("object.applymodify" , text = "3.ApplyMechModifiers")
-        col6.operator("object.mechclean" , text = "4.MechClean")
+        col6.operator("am.applymodify" , text = "3.ApplyMechModifiers")
+        col6.operator("object.mechclean" , text = "4.MechClean(Edit)")
+        row7.prop(amProperty, "GenMechBemeshClean")
+        row7.prop(amProperty, "GenMechUVPackmaster")
+        col7.operator("object.applyclean" , text = "5.ApplyClean(Edit)")
         
 

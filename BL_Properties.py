@@ -66,3 +66,28 @@ class AMProperties(PropertyGroup):
         description="修改编辑模式下的大小",
         default = False
         )
+
+    GenMechBemeshClean: BoolProperty(
+        name="Bemesh Clean",
+        description="Bemesh Clean1.1",
+        default = False
+        )
+
+    GenMechUVPackmaster: BoolProperty(
+        name="UVPackmaster",
+        description="UVPackmaster2.3.2",
+        default = False
+        )
+
+    GenMechRemeshEnum: EnumProperty(
+        name="RemeshEnum",
+        description="Gen Mech Enum Modify",
+        items=[
+            ('BLOCKS', 'BLOCKS', ""),
+            ('SMOOTH', 'SMOOTH', ""),#重构网格=最大50倍 0.1体素  或0.002
+            ('SHARP', 'SHARP', "")
+            #('MODE_GD_MARBLE', "大理石 Marble", ""),
+            #('MODE_GD_MUSGRAVE', "马斯格雷夫分形 Musgrave", "")
+        ],
+        default='SMOOTH'
+    )

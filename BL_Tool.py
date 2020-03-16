@@ -1,4 +1,7 @@
 import bpy 
+import sys
+sys.path.append(r'C:/Users/Administrator/AppData/Roaming/Blender Foundation/Blender/2.82/scripts/addons/Bmesh clean 2_8x v1_1')
+import __init__
 
 def find_collection(context, item):
     collections = item.users_collection
@@ -32,7 +35,7 @@ def find_object(find_name,old_col,new_col):#是调用上面两个函数的函数
                 cube.name = new_col
 
 class ApplyModify(bpy.types.Operator):
-    bl_idname = "object.applymodify"
+    bl_idname = "am.applymodify"
     bl_label = "Apply Modify"
     bl_description = "Just Apply Modify Operator" 
     bl_options = {'REGISTER'}
@@ -42,15 +45,166 @@ class ApplyModify(bpy.types.Operator):
         #rename_object('GenMech')
         sel = bpy.context.selected_objects
         amProperty = context.scene.amProperties
-
+        bpy.ops.object.mode_set(mode='OBJECT')
         for ob in sel:
+            ob.select_set(True)
             bpy.context.view_layer.objects.active = ob
             #ob.convert(target='MESH')
             bpy.ops.object.convert(target='MESH')
-        #edit
-        self.report({'INFO'}, "3.Apply Modify Gen Mech: bpy.ops.object.applymodify()")
+            bpy.ops.object.mode_set(mode='EDIT')#！出错是因为没有返回值
+            bpy.context.space_data.overlay.show_face_orientation = False# 法线
+        self.report({'INFO'}, "3.Apply Modify")
         return {'FINISHED'}
 
+
+class ApplyClean(bpy.types.Operator):
+    bl_idname = "object.applyclean"
+    bl_label = "Apply Clean"
+    bl_description = "Apply Clean Operator UV，mirror" 
+    bl_options = {'REGISTER'}
+
+    def execute(self, context):
+        #find_object('4MechClean','4MechClean',"5ApplyClean")
+        #rename_object('GenMech')
+        #sel = bpy.context.selected_objects
+        #amProperty = context.scene.amProperties
+        
+        #for ob in sel:
+            #ob.select_set(True)
+            #bpy.context.view_layer.objects.active = ob
+            #ob.convert(target='MESH')
+        
+        bpy.ops.mesh.hide(unselected=False)
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.mesh.delete(type='ONLY_FACE')
+        bpy.ops.mesh.reveal()
+        bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT', action='TOGGLE')
+        bpy.ops.mesh.select_all(action='INVERT')
+        bpy.ops.mesh.delete(type='EDGE_FACE')
+        bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='FACE', action='TOGGLE')
+        amProperty = context.scene.amProperties
+
+
+
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.ops.object.modifier_add(type='WELD')
+        bpy.context.object.modifiers["Weld"].merge_threshold = 0.0035
+        bpy.context.object.modifiers["Weld"].max_interactions = 4
+        bpy.ops.object.modifier_apply(apply_as='DATA', modifier="Weld")
+
+
+
+        if amProperty.GenMechBemeshClean ==True:
+            bpy.ops.object.mode_set(mode='OBJECT')
+            bpy.context.scene.scene_check_set.preset_list = '2 - Blender Default'
+            #bpy.context.scene.scene_check_set.in_out_menu = 'OUT'
+            __init__.bmesh_clean()
+            bpy.ops.object.mode_set(mode='OBJECT')
+            bpy.context.scene.scene_check_set.preset_list = '1 - Import clean'
+            #bpy.context.scene.scene_check_set.in_out_menu = 'OUT'
+            __init__.bmesh_clean()
+            bpy.ops.object.mode_set(mode='OBJECT')
+            #bpy.ops.object.mode_set(mode='EDIT')
+        
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.mesh.delete_loose()
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.mesh.remove_doubles(threshold=0.0005)
+
+        bpy.ops.object.mode_set(mode='EDIT')
+
+
+        bpy.ops.mesh.select_all(action='SELECT')
+
+        if amProperty.GenMechMirrorBoll ==True:
+            bpy.ops.mesh.bisect(plane_co=(0, 0, 50), plane_no=(1, 0, 0), use_fill=False, clear_inner=True, clear_outer=False, xstart=243, xend=243, ystart=349, yend=20)
+        
+        bpy.ops.mesh.select_all(action='SELECT')
+
+        bpy.ops.uv.smart_project()
+        
+        if amProperty.GenMechUVPackmaster ==True:
+            try:
+                bpy.context.scene.tool_settings.use_uv_select_sync = True
+                bpy.context.space_data.uv_editor.show_stretch = True
+                bpy.ops.uv.pack_islands(margin=0)
+                
+                bpy.ops.uvpackmaster2.uv_overlap_check() 
+                bpy.ops.uvpackmaster2.uv_measure_area()
+                bpy.ops.uvpackmaster2.uv_validate()
+                
+                bpy.context.scene.uvp2_props.margin = 0.002
+                bpy.context.scene.uvp2_props.precision = 1000
+                bpy.context.scene.uvp2_props.prerot_disable = False
+                bpy.context.scene.uvp2_props.rot_step = 90
+                bpy.context.scene.uvp2_props.island_rot_step_enable = True
+                
+                bpy.context.scene.uvp2_props.pre_validate = False
+                bpy.context.scene.uvp2_props.pack_to_others = False
+                bpy.context.scene.uvp2_props.lock_overlapping = True#重叠
+
+            except:
+                print("problem")
+            finally:
+                #bpy.ops.mesh.mark_seam(clear=False) #
+                bpy.ops.uvpackmaster2.uv_pack()
+                
+                #bpy.app.timers.register(UVpack)
+                
+                #bpy.ops.object.mode_set(mode='OBJECT')
+        #bpy.ops.object.mode_set(mode='OBJECT')
+
+        if amProperty.GenMechMirrorBoll ==True:
+            #bpy.ops.mesh.bisect(plane_co=(0, 0, 50), plane_no=(1, 0, 0), use_fill=False, clear_inner=True, clear_outer=False, xstart=243, xend=243, ystart=349, yend=20)
+            #bpy.ops.mesh.select_all(action='SELECT')
+            #bpy.ops.uv.smart_project()
+            #bpy.ops.object.mode_set(mode='OBJECT')
+            bpy.ops.object.modifier_add(type='MIRROR')
+            #bpy.ops.object.modifier_apply(apply_as='DATA', modifier="Mirror")
+        #else:
+            #bpy.ops.mesh.select_all(action='SELECT')
+            #bpy.ops.uv.smart_project()
+            #bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.context.space_data.overlay.show_face_orientation = False# 法线
+
+
+
+        
+        #edit
+        self.report({'INFO'}, "5.Apply Clean")
+        return {'FINISHED'}
+
+
+
+
+'''
+def UVpack():
+    try:
+        bpy.context.scene.tool_settings.use_uv_select_sync = True
+        bpy.context.space_data.uv_editor.show_stretch = True
+        bpy.ops.uv.pack_islands(margin=0)
+        
+        bpy.ops.uvpackmaster2.uv_overlap_check() 
+        bpy.ops.uvpackmaster2.uv_measure_area()
+        bpy.ops.uvpackmaster2.uv_validate()
+        
+        bpy.context.scene.uvp2_props.margin = 0.002
+        bpy.context.scene.uvp2_props.precision = 1000
+        bpy.context.scene.uvp2_props.prerot_disable = False
+        bpy.context.scene.uvp2_props.rot_step = 90
+        bpy.context.scene.uvp2_props.island_rot_step_enable = True
+        
+        bpy.context.scene.uvp2_props.pre_validate = False
+        bpy.context.scene.uvp2_props.pack_to_others = False
+        bpy.context.scene.uvp2_props.lock_overlapping = True#重叠
+
+    except:
+        print("problem")
+    finally:
+        #bpy.ops.mesh.mark_seam(clear=False) #
+        bpy.ops.uvpackmaster2.uv_pack()
+'''
 
 '''
 def rename_object(new_name):

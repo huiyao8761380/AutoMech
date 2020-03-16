@@ -19,172 +19,270 @@ class GenMech(bpy.types.Operator):
         sel = bpy.context.selected_objects
         amProperty = context.scene.amProperties
 
+
         for ob in sel:
             bpy.context.view_layer.objects.active = ob
             #for mod in [m for m in ob.modifiers if m.type != 'SKIN']:
+            if len(ob.data.vertices) <=2500:#防误触 顶点小于的时候才能运行
 
-            #for m in ob.modifiers:
-                #if m.type != 'SKIN':
-            #暂时切勿更改以下修改器名字
-            Skin = ob.modifiers.get("Skin")
-            Remesh = ob.modifiers.get("Remesh")
-            Bevel = ob.modifiers.get("Bevel")
-            Decimate = ob.modifiers.get("Decimate")
-            Decimate2 = ob.modifiers.get("Decimate.001")
-            Bevel1 = ob.modifiers.get("Bevel.001")
-            EdgeSplit = ob.modifiers.get("EdgeSplit")
-            Solidify = ob.modifiers.get("Solidify")
-            Bevel2 = ob.modifiers.get("Bevel.002")
-            Mirror = ob.modifiers.get("Mirror")
-            Displace = ob.modifiers.get("Displace")
+                #for m in ob.modifiers:
+                    #if m.type != 'SKIN':
+                #暂时切勿更改以下修改器名字
+                if len(ob.material_slots) < 1:##如果没有槽，那么我们追加创建槽和分配
+                    bpy.ops.object.material_slot_add()
+                    bpy.ops.object.material_slot_add()
+                    bpy.ops.object.material_slot_add()
+                    bpy.ops.object.material_slot_add()
+                    bpy.ops.object.material_slot_add()
 
-            if Skin:
-                ob.modifiers.remove(Skin)
-
-            if Remesh:
-                ob.modifiers.remove(Remesh)
-
-            if Bevel:
-                ob.modifiers.remove(Bevel)
-
-            if Decimate:
-                ob.modifiers.remove(Decimate)
-
-            if Decimate2:
-                ob.modifiers.remove(Decimate2)
-
-            if Bevel1:
-                ob.modifiers.remove(Bevel1)
-
-            if EdgeSplit:
-                ob.modifiers.remove(EdgeSplit)
-
-            if Solidify:
-                ob.modifiers.remove(Solidify)
-
-            if Bevel2:
-                ob.modifiers.remove(Bevel2)
-
-            if Displace:
-                ob.modifiers.remove(Displace)
-
-            if amProperty.GenMechEnum =='GenMechfy1':
-
-                mod_Skin = ob.modifiers.new("Skin", "SKIN")
-
-                #bpy.ops.object.modifier_add(type='REMESH')
-                mod_Remesh = ob.modifiers.new("Remesh", "REMESH")
-                mod_Remesh.mode = 'SMOOTH'
-                #bpy.context.object.modifiers["Remesh"].mode = 'SHARP'
-                mod_Remesh.octree_depth = 6 #
-                mod_Remesh.scale = 0.88 #0.75
-
-                mod_Bevel = ob.modifiers.new("Bevel", "BEVEL")
-                mod_Bevel.offset_type = 'PERCENT'
-                mod_Bevel.width_pct = 37 #动画
-                mod_Bevel.use_only_vertices = True
-                mod_Bevel.use_clamp_overlap = True
-                mod_Bevel.loop_slide = True
-                mod_Bevel.material = -1         #0
-
-                mod_Decimate = ob.modifiers.new("Decimate", "DECIMATE")
-                mod_Decimate.ratio = 0.02
-
-                mod_Decimate2 = ob.modifiers.new("Decimate.001", "DECIMATE")
-                mod_Decimate2.decimate_type = 'DISSOLVE'
-                mod_Decimate2.delimit = {'MATERIAL'}
-
-                mod_Bevel1 = ob.modifiers.new("Bevel.001", "BEVEL")
-                mod_Bevel1.offset_type = 'PERCENT'
-                mod_Bevel1.width_pct = 33
-                mod_Bevel1.use_only_vertices = True
-                mod_Bevel1.use_clamp_overlap = True
-                mod_Bevel1.loop_slide = True
-                mod_Bevel1.material = 0         #1
-
-                mod_EdgeSplit = ob.modifiers.new("EdgeSplit", "EDGE_SPLIT")
-
-                mod_Solidify = ob.modifiers.new("Solidify", "SOLIDIFY")
-                mod_Solidify.thickness = -0.02
-                mod_Solidify.use_rim_only = True
-                mod_Solidify.material_offset_rim = 0  #1
-
-                mod_Bevel2 = ob.modifiers.new("Bevel.002", "BEVEL")
-                mod_Bevel2.offset_type = 'OFFSET'
-                mod_Bevel2.width = 0.05
-                mod_Bevel2.material = -1             #
-
-                mod_Displace = ob.modifiers.new("Displace", "DISPLACE")
-                mod_Displace.direction = 'NORMAL'
-                mod_Displace.mid_level = 0.5
-                mod_Displace.strength = 0.05
-
-                if amProperty.GenMechMirrorBoll == True:
-                    if Mirror:
-                        ob.modifiers.remove(Mirror)
-                    mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
-                else:
-                    if Mirror:
-                        ob.modifiers.remove(Mirror)
+                    if bpy.data.materials.get("0") is not None:#物体已经有材料了
+                        mat0 = bpy.data.materials["0"]
+                    else:#制作新材料
+                        mat0 = bpy.data.materials.new(name="0")
+                    #将新材质分配给选定的对象 
+                    if len(ob.data.materials):#如果已经有材料的空位
+                        ob.data.materials[0] = mat0
+                    else:
+                        ob.data.materials.append(mat0)
 
 
-            elif amProperty.GenMechEnum =='GenMechfy2':
-                mod_Skin = ob.modifiers.new("Skin", "SKIN")
+                    if bpy.data.materials.get("1") is not None:
+                        mat1 = bpy.data.materials["1"]
+                    else:
+                        mat1 = bpy.data.materials.new(name="1")
+                    
+                    if len(ob.data.materials):
+                        ob.data.materials[1] = mat1
+                    else:
+                        ob.data.materials.append(mat1)
 
-                #bpy.ops.object.modifier_add(type='REMESH')
-                mod_Remesh = ob.modifiers.new("Remesh", "REMESH")
-                mod_Remesh.mode = 'SMOOTH'
-                #bpy.context.object.modifiers["Remesh"].mode = 'SHARP'
-                mod_Remesh.octree_depth = 4 #
-                mod_Remesh.scale = 0.88 #0.75
 
-                mod_Bevel = ob.modifiers.new("Bevel", "BEVEL")
-                mod_Bevel.offset_type = 'PERCENT'
-                mod_Bevel.width_pct = 37 #动画
-                mod_Bevel.use_only_vertices = True
-                mod_Bevel.use_clamp_overlap = True
-                mod_Bevel.loop_slide = True
-                mod_Bevel.material = -1         #0
+                    if bpy.data.materials.get("2") is not None:
+                        mat2 = bpy.data.materials["2"]
+                    else:
+                        mat2 = bpy.data.materials.new(name="2")
+                    
+                    if len(ob.data.materials):
+                        ob.data.materials[2] = mat2
+                    else:
+                        ob.data.materials.append(mat2)
 
-                mod_Decimate = ob.modifiers.new("Decimate", "DECIMATE")
-                mod_Decimate.ratio = 0.02
+                    
+                    if bpy.data.materials.get("3") is not None:
+                        mat3 = bpy.data.materials["3"]
+                    else:
+                        mat3 = bpy.data.materials.new(name="3")
+                    
+                    if len(ob.data.materials):
+                        ob.data.materials[3] = mat3
+                    else:
+                        ob.data.materials.append(mat3)
 
-                mod_Decimate2 = ob.modifiers.new("Decimate.001", "DECIMATE")
-                mod_Decimate2.decimate_type = 'DISSOLVE'
-                mod_Decimate2.delimit = {'MATERIAL'}
 
-                mod_Bevel1 = ob.modifiers.new("Bevel.001", "BEVEL")
-                mod_Bevel1.offset_type = 'PERCENT'
-                mod_Bevel1.width_pct = 33
-                mod_Bevel1.use_only_vertices = True
-                mod_Bevel1.use_clamp_overlap = True
-                mod_Bevel1.loop_slide = True
-                mod_Bevel1.material = 0         #1
+                    if bpy.data.materials.get("4") is not None:
+                        mat4 = bpy.data.materials["4"]
+                    else:
+                        mat4 = bpy.data.materials.new(name="4")
+                    
+                    if len(ob.data.materials):
+                        ob.data.materials[4] = mat4
+                    else:
+                        ob.data.materials.append(mat4)
 
-                mod_EdgeSplit = ob.modifiers.new("EdgeSplit", "EDGE_SPLIT")
 
-                mod_Solidify = ob.modifiers.new("Solidify", "SOLIDIFY")
-                mod_Solidify.thickness = -0.02
-                mod_Solidify.use_rim_only = True
-                mod_Solidify.material_offset_rim = 0  #1
+                    mat0.diffuse_color = (0, 0.238852, 1, 1)    
+                    mat0.metallic = 0.8
+                    mat0.specular_intensity = 0.1
+                    mat0.roughness = 0.3
 
-                mod_Bevel2 = ob.modifiers.new("Bevel.002", "BEVEL")
-                mod_Bevel2.offset_type = 'OFFSET'
-                mod_Bevel2.width = 0.05
-                mod_Bevel2.material = -1             #
+                    mat1.diffuse_color = (1, 0.936776, 0.314941, 1)
+                    mat1.metallic = 1
+                    mat1.specular_intensity = 0.35
+                    mat1.roughness = 0.15
 
-                mod_Displace = ob.modifiers.new("Displace", "DISPLACE")
-                mod_Displace.direction = 'NORMAL'
-                mod_Displace.mid_level = 0.5
-                mod_Displace.strength = 0.01#
+                    mat2.diffuse_color = (0.056421, 0.104517, 0.195988, 1)
+                    mat2.metallic = 0.75
+                    mat2.specular_intensity = 0.45
+                    mat2.roughness = 0.3
 
-                if amProperty.GenMechMirrorBoll == True:
-                    if Mirror:
-                        ob.modifiers.remove(Mirror)
-                    mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
-                else:
-                    if Mirror:
-                        ob.modifiers.remove(Mirror)
+                    mat3.diffuse_color = (0.22542, 0.499922, 0.638272, 1)
+                    mat3.metallic = 0.85
+                    mat3.specular_intensity = 0.5
+                    mat3.roughness = 0.2
+
+                    mat4.diffuse_color = (0.0134106, 0.0134106, 0.0134106, 1)
+                    mat4.metallic = 0.6
+                    mat4.specular_intensity = 0
+                    mat4.roughness = 0.7
+
+                    #bpy.context.object.active_material.diffuse_color = (0.8, 0.49499, 0.655768, 1)
+                    #bpy.context.object.active_material.diffuse_color = (0.112115, 0.149903, 0.28101, 1)
+
+                #b = bpy.ops.material.new()
+                #c = bpy.data.materials["1"].node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.0753091, 0.07658, 0.0248376, 1)
+
+
+                Skin = ob.modifiers.get("Skin")
+                Remesh = ob.modifiers.get("Remesh")
+                Bevel = ob.modifiers.get("Bevel")
+                Decimate = ob.modifiers.get("Decimate")
+                Decimate2 = ob.modifiers.get("Decimate.001")
+                Bevel1 = ob.modifiers.get("Bevel.001")
+                EdgeSplit = ob.modifiers.get("EdgeSplit")
+                Solidify = ob.modifiers.get("Solidify")
+                Bevel2 = ob.modifiers.get("Bevel.002")
+                Mirror = ob.modifiers.get("Mirror")
+                Displace = ob.modifiers.get("Displace")
+
+                if Skin:
+                    ob.modifiers.remove(Skin)
+
+                if Remesh:
+                    ob.modifiers.remove(Remesh)
+
+                if Bevel:
+                    ob.modifiers.remove(Bevel)
+
+                if Decimate:
+                    ob.modifiers.remove(Decimate)
+
+                if Decimate2:
+                    ob.modifiers.remove(Decimate2)
+
+                if Bevel1:
+                    ob.modifiers.remove(Bevel1)
+
+                if EdgeSplit:
+                    ob.modifiers.remove(EdgeSplit)
+
+                if Solidify:
+                    ob.modifiers.remove(Solidify)
+
+                if Bevel2:
+                    ob.modifiers.remove(Bevel2)
+
+                if Displace:
+                    ob.modifiers.remove(Displace)
+
+                if amProperty.GenMechEnum =='GenMechfy1':
+
+                    mod_Skin = ob.modifiers.new("Skin", "SKIN")
+
+                    #bpy.ops.object.modifier_add(type='REMESH')
+                    mod_Remesh = ob.modifiers.new("Remesh", "REMESH")
+                    mod_Remesh.mode = amProperty.GenMechRemeshEnum#'SMOOTH'!!!!!!!!!!
+
+
+                    #bpy.context.object.modifiers["Remesh"].mode = 'SHARP'
+                    mod_Remesh.octree_depth = 6 #
+                    mod_Remesh.scale = 0.88 #0.75
+
+                    mod_Bevel = ob.modifiers.new("Bevel", "BEVEL")
+                    mod_Bevel.offset_type = 'PERCENT'
+                    mod_Bevel.width_pct = 37 #动画
+                    mod_Bevel.use_only_vertices = True
+                    mod_Bevel.use_clamp_overlap = True
+                    mod_Bevel.loop_slide = True
+                    mod_Bevel.material = 3         #0
+
+                    mod_Decimate = ob.modifiers.new("Decimate", "DECIMATE")
+                    mod_Decimate.ratio = 0.02
+
+                    mod_Decimate2 = ob.modifiers.new("Decimate.001", "DECIMATE")
+                    mod_Decimate2.decimate_type = 'DISSOLVE'
+                    mod_Decimate2.delimit = {'MATERIAL'}
+
+                    mod_Bevel1 = ob.modifiers.new("Bevel.001", "BEVEL")
+                    mod_Bevel1.offset_type = 'PERCENT'
+                    mod_Bevel1.width_pct = 33
+                    mod_Bevel1.use_only_vertices = True
+                    mod_Bevel1.use_clamp_overlap = True
+                    mod_Bevel1.loop_slide = True
+                    mod_Bevel1.material = 4         #1
+
+                    mod_EdgeSplit = ob.modifiers.new("EdgeSplit", "EDGE_SPLIT")
+
+                    mod_Solidify = ob.modifiers.new("Solidify", "SOLIDIFY")
+                    mod_Solidify.thickness = -0.02
+                    mod_Solidify.use_rim_only = True
+                    mod_Solidify.material_offset_rim = 2  #1
+
+                    mod_Bevel2 = ob.modifiers.new("Bevel.002", "BEVEL")
+                    mod_Bevel2.offset_type = 'OFFSET'
+                    mod_Bevel2.width = 0.05
+                    mod_Bevel2.material = 1            #
+
+                    mod_Displace = ob.modifiers.new("Displace", "DISPLACE")
+                    mod_Displace.direction = 'NORMAL'
+                    mod_Displace.mid_level = 0.5
+                    mod_Displace.strength = 0.05
+
+                    if amProperty.GenMechMirrorBoll == True:
+                        if Mirror:
+                            ob.modifiers.remove(Mirror)
+                        mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
+                    else:
+                        if Mirror:
+                            ob.modifiers.remove(Mirror)
+
+
+                elif amProperty.GenMechEnum =='GenMechfy2':
+                    mod_Skin = ob.modifiers.new("Skin", "SKIN")
+
+                    #bpy.ops.object.modifier_add(type='REMESH')
+                    mod_Remesh = ob.modifiers.new("Remesh", "REMESH")
+                    mod_Remesh.mode = 'SMOOTH'
+                    #bpy.context.object.modifiers["Remesh"].mode = 'SHARP'
+                    mod_Remesh.octree_depth = 4 #
+                    mod_Remesh.scale = 0.88 #0.75
+
+                    mod_Bevel = ob.modifiers.new("Bevel", "BEVEL")
+                    mod_Bevel.offset_type = 'PERCENT'
+                    mod_Bevel.width_pct = 37 #动画
+                    mod_Bevel.use_only_vertices = True
+                    mod_Bevel.use_clamp_overlap = True
+                    mod_Bevel.loop_slide = True
+                    mod_Bevel.material = 3         #0
+
+                    mod_Decimate = ob.modifiers.new("Decimate", "DECIMATE")
+                    mod_Decimate.ratio = 0.02
+
+                    mod_Decimate2 = ob.modifiers.new("Decimate.001", "DECIMATE")
+                    mod_Decimate2.decimate_type = 'DISSOLVE'
+                    mod_Decimate2.delimit = {'MATERIAL'}
+
+                    mod_Bevel1 = ob.modifiers.new("Bevel.001", "BEVEL")
+                    mod_Bevel1.offset_type = 'PERCENT'
+                    mod_Bevel1.width_pct = 33
+                    mod_Bevel1.use_only_vertices = True
+                    mod_Bevel1.use_clamp_overlap = True
+                    mod_Bevel1.loop_slide = True
+                    mod_Bevel1.material = 4         #1
+
+                    mod_EdgeSplit = ob.modifiers.new("EdgeSplit", "EDGE_SPLIT")
+
+                    mod_Solidify = ob.modifiers.new("Solidify", "SOLIDIFY")
+                    mod_Solidify.thickness = -0.02
+                    mod_Solidify.use_rim_only = True
+                    mod_Solidify.material_offset_rim = 2  #1
+
+                    mod_Bevel2 = ob.modifiers.new("Bevel.002", "BEVEL")
+                    mod_Bevel2.offset_type = 'OFFSET'
+                    mod_Bevel2.width = 0.05
+                    mod_Bevel2.material = 1             #
+
+                    mod_Displace = ob.modifiers.new("Displace", "DISPLACE")
+                    mod_Displace.direction = 'NORMAL'
+                    mod_Displace.mid_level = 0.5
+                    mod_Displace.strength = 0.01#
+
+                    if amProperty.GenMechMirrorBoll == True:
+                        if Mirror:
+                            ob.modifiers.remove(Mirror)
+                        mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
+                    else:
+                        if Mirror:
+                            ob.modifiers.remove(Mirror)
 #bpy.ops.mesh.bisect(plane_co=(0, 0, 50), plane_no=(1, 0, 0), use_fill=False, clear_inner=True, clear_outer=False, xstart=243, xend=243, ystart=349, yend=20)
 #bpy.ops.object.editmode_toggle()
 #bpy.ops.mesh.select_all(action='TOGGLE')
@@ -245,5 +343,5 @@ class GenMech(bpy.types.Operator):
         #for selectobj in sel:
             #selectobj=bpy.ops.object.modifier_add(type='SKIN')
         '''
-        self.report({'INFO'}, "2.Gen Mech:bpy.ops.object.bl_genmech()")
+        self.report({'INFO'}, "2.Gen Mech:如果物体顶点数小于2500执行")
         return {'FINISHED'}
