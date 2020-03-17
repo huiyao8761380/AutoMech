@@ -170,7 +170,7 @@ class GenMech(bpy.types.Operator):
 
                     #bpy.ops.object.modifier_add(type='REMESH')
                     mod_Remesh = ob.modifiers.new("Remesh", "REMESH")
-                    mod_Remesh.mode = amProperty.GenMechRemeshEnum#'SMOOTH'!!!!!!!!!!
+                    mod_Remesh.mode = 'SMOOTH'#'SMOOTH'!!!!!!!!!!amProperty.GenMechRemeshEnum
 
 
                     #bpy.context.object.modifiers["Remesh"].mode = 'SHARP'

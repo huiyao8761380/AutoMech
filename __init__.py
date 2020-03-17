@@ -41,7 +41,7 @@ SamplePropertyGroup = type(
         "xvMax": FloatProperty(name="xvMax", default=1),
         "yvMax": FloatProperty(name="yvMax", default=1),
         "zvMax": FloatProperty(name="zvMax", default=1),
-        "edgeLoc": IntVectorProperty(name="LocEdge", default=(0,0,0)),
+        "edgeLoc": IntVectorProperty(name="LocEdge", default=(0,0,0), update=edgeLoc_update),
         "edgeLocBool": BoolProperty(name="LocEdge", default=False),
         "LocEdit": FloatVectorProperty(name="LocEdit", default=(0,0,0)),
         "LocEditBool": BoolProperty(name="LocEdit", default=False)

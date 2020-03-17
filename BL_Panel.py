@@ -3,10 +3,12 @@ from . BL_GenLine import GenLine
 from . BL_GenMech import GenMech
 from . BL_EdgesGen import EdgesGen
 from . BL_Properties import AMProperties
-from . BL_Tool import ApplyModify
+from . BL_Tool import *
 from . BL_MechClean import MechClean
 from bpy.types import Panel,Operator,PropertyGroup
 from bpy.props import FloatProperty, PointerProperty
+
+
 
 
 class AutoMechPanel(bpy.types.Panel):
@@ -19,6 +21,7 @@ class AutoMechPanel(bpy.types.Panel):
     def draw(self, context):
         sampleProperty = context.scene.samplePropertyGroup
         amProperty = context.scene.amProperties
+        obj = context.object
 
         layout = self.layout
         col = layout.column(align=True)

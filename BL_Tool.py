@@ -176,7 +176,35 @@ class ApplyClean(bpy.types.Operator):
         return {'FINISHED'}
 
 
+def edgeLoc_update(self, context):
+    ob = context.object
+    sampleProperty = context.scene.samplePropertyGroup
+    edgeLoc = sampleProperty.edgeLoc
+    if sampleProperty.edgeLocBool == True:
+        ob.location = edgeLoc
+    else:
+        edgeLoc= (0, 0, 0)#sampleProperty.edgeLocBool = (0, 0, 0)
+        #ob.location = edgeLoc
 
+def RemeshEnum_update(self, context):#要设置回调函数才行callback
+    #ob = context.object.modifiers["Remesh"]
+    amProperty = context.scene.amProperties
+    GenMechRemeshEnum=amProperty.GenMechRemeshEnum
+    sel = bpy.context.selected_objects
+    for ob in sel:
+        bpy.context.view_layer.objects.active = ob
+        #GenMechRemeshEnum = ob.modifiers["Remesh"].mode
+    #if GenMechRemeshEnum == '':
+        #ob.mode = 'SHARP'
+        if ob.modifiers["Remesh"].mode != GenMechRemeshEnum:
+            ob.modifiers["Remesh"].mode = GenMechRemeshEnum
+
+        #GenMechRemeshEnum = ob.modifiers["Remesh"].mode
+    #return GenMechRemeshEnum.items
+    #return ob.modifiers["Remesh"].mode
+        #amProperty.GenMechRemeshEnum = ob.mode
+    #GenMechRemeshEnum = ob.modifiers["Remesh"].mode
+    #bpy.context.object.modifiers["Remesh"].mode = 'SHARP'
 
 '''
 def UVpack():

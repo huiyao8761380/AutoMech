@@ -1,6 +1,7 @@
 import bpy
 from bpy.types import Panel,Operator,PropertyGroup
 from bpy.props import FloatProperty, PointerProperty, EnumProperty, BoolProperty
+from . BL_Tool import *
 '''
 import bpy
 from bpy.utils import register_class, unregister_class
@@ -89,5 +90,6 @@ class AMProperties(PropertyGroup):
             #('MODE_GD_MARBLE', "大理石 Marble", ""),
             #('MODE_GD_MUSGRAVE', "马斯格雷夫分形 Musgrave", "")
         ],
-        default='SMOOTH'
+        default='SMOOTH',
+        update=RemeshEnum_update
     )
