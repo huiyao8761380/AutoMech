@@ -23,6 +23,7 @@ from . BL_EdgesGen import EdgesGen
 from . BL_Properties import AMProperties
 from . BL_Tool import *
 from . BL_MechClean import MechClean
+from . BL_AddRig import AddRig
 
 from bpy.types import Panel,Operator,PropertyGroup
 
@@ -41,14 +42,15 @@ SamplePropertyGroup = type(
         "xvMax": FloatProperty(name="xvMax", default=1),
         "yvMax": FloatProperty(name="yvMax", default=1),
         "zvMax": FloatProperty(name="zvMax", default=1),
-        "edgeLoc": IntVectorProperty(name="LocEdge", default=(0,0,0), update=edgeLoc_update),
+        "edgeLoc": FloatVectorProperty(name="LocEdge", default=(0,0,0),step=10, update=edgeLoc_update),
         "edgeLocBool": BoolProperty(name="LocEdge", default=False),
-        "LocEdit": FloatVectorProperty(name="LocEdit", default=(0,0,0)),
-        "LocEditBool": BoolProperty(name="LocEdit", default=False)
+        "LocEdit": FloatVectorProperty(name="LocEdit", default=(0,0,0),step=10, update=LocEdit_update),#
+        "LocEditBool": BoolProperty(name="LocEdit", default=False),
+        "Bevel0float": FloatProperty(name="width_pct", default=37, min=0, max=100, update=GenMechBevel0float_update)
     })
 
 
-classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup, AMProperties, ApplyModify, MechClean, ApplyClean)
+classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup, AMProperties, ApplyModify, MechClean, ApplyClean, AddRig)
 #register, unregister = bpy.utils.register_classes_factory(classes)
 
 

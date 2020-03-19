@@ -1,6 +1,6 @@
 import bpy
 from bpy.types import Panel,Operator,PropertyGroup
-from bpy.props import FloatProperty, PointerProperty, EnumProperty, BoolProperty
+from bpy.props import FloatProperty, PointerProperty, EnumProperty, BoolProperty, FloatVectorProperty
 from . BL_Tool import *
 '''
 import bpy
@@ -62,12 +62,6 @@ class AMProperties(PropertyGroup):
         default = False
         )
 
-    GenMechResizeBoll: BoolProperty(
-        name="Resize",
-        description="修改编辑模式下的大小",
-        default = False
-        )
-
     GenMechBemeshClean: BoolProperty(
         name="Bemesh Clean",
         description="Bemesh Clean1.1",
@@ -82,14 +76,67 @@ class AMProperties(PropertyGroup):
 
     GenMechRemeshEnum: EnumProperty(
         name="RemeshEnum",
-        description="Gen Mech Enum Modify",
+        description="Gen Mech Remesh Enum Modify",
         items=[
             ('BLOCKS', 'BLOCKS', ""),
-            ('SMOOTH', 'SMOOTH', ""),#重构网格=最大50倍 0.1体素  或0.002
+            ('SMOOTH', 'SMOOTH', ""),
             ('SHARP', 'SHARP', "")
-            #('MODE_GD_MARBLE', "大理石 Marble", ""),
-            #('MODE_GD_MUSGRAVE', "马斯格雷夫分形 Musgrave", "")
+
         ],
         default='SMOOTH',
         update=RemeshEnum_update
     )
+
+
+    GenMechBevel0Enum:EnumProperty(
+        name="Bevel0Enum",
+        description="Gen Mech Bevel0 Enum Modify",
+        items=GenMechBevel0Enum_callback,
+        options={'ANIMATABLE'},
+        #default= bpy.context.object.modifiers["Bevel"].offset_type
+        update=GenMechBevel0Enum_update
+
+        #get=get_Bevel0Enum
+        #set=set_Bevel0Enum
+    )
+
+    '''
+    GenMechBevel0float:FloatProperty(
+        name="width_pct",
+        description="Gen Mech Bevel0 width_pct Modify",
+        default=37,
+        min=0,
+        amx=100,
+        #options={'ANIMATABLE'},
+        #update=GenMechBevel0float_update
+    )
+    '''
+
+
+    GenMechResizeBoll: BoolProperty(
+        name="Resize",
+        description="修改编辑模式下的大小",
+        default = False
+        )
+
+    GenMechResize: FloatVectorProperty(
+        name="size",
+        description="修改编辑模式下的大小",
+        default = (1,1,1),
+        step=10,
+        update=GenMechResize_update
+        #set=set_GenMechResize
+        )
+
+    GenMechSkinSizeBool: BoolProperty(
+        name="Skin Size",
+        description="修改编辑模式下的大小",
+        default = False
+        )
+
+    GenMechSkinResize: FloatVectorProperty(
+        name="Skin modifier Size",
+        description="修改编辑模式下蒙皮修改器的大小",
+        default = (1,1,1),
+        update=GenMechSkinResize_update
+        )

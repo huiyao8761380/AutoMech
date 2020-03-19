@@ -132,6 +132,12 @@ class GenLine(bpy.types.Operator):
 
 
         if sampleProperty.LocEditBool == True:
+            bpy.ops.object.mode_set(mode='OBJECT')
+            bpy.context.active_object
+            bpy.context.scene.cursor.location = sampleProperty.LocEdit
+            bpy.ops.object.origin_set(type='ORIGIN_CURSOR', center='MEDIAN')
+            
+            '''
             #bpy.ops.object.select_set(True)
             #bpy.context.active_object
             #bpy.context.selected_objects
@@ -145,7 +151,7 @@ class GenLine(bpy.types.Operator):
 
             #已空物体为中心的镜像
             #bpy.ops.transform.resize(value=(1, 1, 2.63777))
-
+            '''
 
         self.report({'INFO'}, "1.Gen Line:bpy.ops.object.bl_genline()")
         return {'FINISHED'}

@@ -34,6 +34,18 @@ def find_object(find_name,old_col,new_col):#是调用上面两个函数的函数
                 cube_collection.objects.unlink(cube)  # remove it from the old collection 从旧合集中删除物体
                 cube.name = new_col
 
+def only_find_object(find_name,new_col):#是调用上面两个函数的函数，所有输入都为’‘ 或“”
+    for childObject in bpy.data.objects:
+            #此处添加的代码判断它的名字来获取
+        if find_name in childObject.name:#如果该物体的名字中出现Cube
+            childObject.select_set(True)#选择所有找到有cube字符的物体
+            cube = bpy.data.objects[childObject.name]#选择这些物体并赋值给cube
+            #cube_collection = find_collection(bpy.context, cube)#通过函数find_collection制作合集
+            new_collection = make_collection(new_col, "0AutoMech")#NEW col 将合集交给1GenLine
+            new_collection.objects.link(cube)  # put the cube in the new collection 从新合集中添加物体
+            bpy.data.collections["0AutoMech"].objects.link(cube)  # remove it from the old collection 从旧合集中删除物体
+            cube.name = new_col
+
 class ApplyModify(bpy.types.Operator):
     bl_idname = "am.applymodify"
     bl_label = "Apply Modify"
@@ -41,7 +53,7 @@ class ApplyModify(bpy.types.Operator):
     bl_options = {'REGISTER'}
 
     def execute(self, context):
-        find_object('2GenMech','2GenMech',"3ApplyMech")
+        find_object('2GenMech','2GenMech',"3ApplyMech")#这里需要改命名
         #rename_object('GenMech')
         sel = bpy.context.selected_objects
         amProperty = context.scene.amProperties
@@ -52,6 +64,7 @@ class ApplyModify(bpy.types.Operator):
             #ob.convert(target='MESH')
             bpy.ops.object.convert(target='MESH')
             bpy.ops.object.mode_set(mode='EDIT')#！出错是因为没有返回值
+            bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='FACE', action='TOGGLE')#
             bpy.context.space_data.overlay.show_face_orientation = False# 法线
         self.report({'INFO'}, "3.Apply Modify")
         return {'FINISHED'}
@@ -186,8 +199,51 @@ def edgeLoc_update(self, context):
         edgeLoc= (0, 0, 0)#sampleProperty.edgeLocBool = (0, 0, 0)
         #ob.location = edgeLoc
 
+def LocEdit_update(self, context):
+    ob = context.object
+    sampleProperty = context.scene.samplePropertyGroup
+    LocEdit = sampleProperty.LocEdit
+    if sampleProperty.LocEditBool == True:
+        bpy.ops.object.mode_set(mode='OBJECT')
+        #bpy.ops.object.select_all(action='DESELECT')
+        bpy.context.active_object
+        #bpy.ops.object.mode_set(mode='EDIT')
+        #bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT', action='TOGGLE')
+        
+        #bpy.ops.mesh.select_all(action='SELECT')
+        bpy.context.scene.cursor.location = sampleProperty.LocEdit
+        bpy.ops.object.origin_set(type='ORIGIN_CURSOR', center='MEDIAN')
+        #bpy.ops.transform.translate(value=sampleProperty.LocEdit)
+        #bpy.ops.object.mode_set(mode='OBJECT')
+
+        #
+        #
+    else:
+        edgeLoc= (0, 0, 0)
+    '''
+    if sampleProperty.LocEditBool == True:
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.ops.object.select_all(action='DESELECT')
+        bpy.context.active_object
+        bpy.ops.object.mode_set(mode='EDIT')
+        #bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT', action='TOGGLE')
+        #bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.transform.translate(value=sampleProperty.LocEdit)
+        bpy.ops.object.mode_set(mode='OBJECT')
+
+        #bpy.context.scene.cursor.location = (0,0,0)
+        #bpy.ops.object.origin_set(type='ORIGIN_CURSOR', center='MEDIAN')
+    else:
+        edgeLoc= (0, 0, 0)
+    '''
 def RemeshEnum_update(self, context):#要设置回调函数才行callback
-    #ob = context.object.modifiers["Remesh"]
+    '''
+    items=[
+        ('BLOCKS', 'BLOCKS', ""),
+        ('SMOOTH', 'SMOOTH', ""),
+        ('SHARP', 'SHARP', "")
+    ]
+    '''
     amProperty = context.scene.amProperties
     GenMechRemeshEnum=amProperty.GenMechRemeshEnum
     sel = bpy.context.selected_objects
@@ -198,13 +254,160 @@ def RemeshEnum_update(self, context):#要设置回调函数才行callback
         #ob.mode = 'SHARP'
         if ob.modifiers["Remesh"].mode != GenMechRemeshEnum:
             ob.modifiers["Remesh"].mode = GenMechRemeshEnum
-
+    #return items
         #GenMechRemeshEnum = ob.modifiers["Remesh"].mode
     #return GenMechRemeshEnum.items
     #return ob.modifiers["Remesh"].mode
         #amProperty.GenMechRemeshEnum = ob.mode
     #GenMechRemeshEnum = ob.modifiers["Remesh"].mode
     #bpy.context.object.modifiers["Remesh"].mode = 'SHARP'
+
+def GenMechBevel0Enum_callback(self, context):
+    #amProperty = context.scene.amProperties
+    items = [
+            ('OFFSET', 'OFFSET', "", 0),
+            ('WIDTH', 'WIDTH', "", 1),
+            ('DEPTH', 'DEPTH', "", 2),
+            ('PERCENT', 'PERCENT', "", 3)
+            #('None', 'None', "", 5)
+        ]
+    #ob = context.object
+    #if ob is not None:
+        #items.valus = int(ob.modifiers["Bevel"].offset_type)
+    return items
+
+def GenMechBevel0Enum_update(self, context):
+    amProperty = context.scene.amProperties
+    sel = bpy.context.selected_objects
+    if sel is not None:
+        for ob in sel:
+            if ob.modifiers.get("Bevel"):
+                bpy.context.view_layer.objects.active = ob
+                ob.modifiers["Bevel"].offset_type = amProperty.GenMechBevel0Enum
+            #b = ob.modifiers["Bevel"].offset_type
+            #amProperty.GenMechBevel0Enum = b
+            #get_Bevel0Enum()
+    '''
+    for ob in sel:
+        if ob.modifiers.get("Bevel"):
+            bpy.context.view_layer.objects.active = ob
+            ob.modifiers["Bevel"].offset_type = amProperty.GenMechBevel0Enum
+    '''
+
+def GenMechBevel0float_update(self, context):
+    #amProperty = context.scene.amProperties
+    sampleProperty = context.scene.samplePropertyGroup
+    sel = bpy.context.selected_objects
+    for ob in sel:
+        if ob.modifiers.get("Bevel"):
+            bpy.context.view_layer.objects.active = ob
+            ob.modifiers["Bevel"].width_pct = sampleProperty.Bevel0float
+
+def GenMechResize_update(self, context):
+    amProperty = context.scene.amProperties
+    sel = bpy.context.selected_objects
+    if amProperty.GenMechResizeBoll == True:
+        bpy.ops.object.mode_set(mode='OBJECT')
+            #   bpy.ops.object.select_all(action='DESELECT')
+            #bpy.context.active_object
+            #bpy.ops.mesh.select_all(action='TOGGLE')
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT', action='TOGGLE')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.transform.resize(value=(1,1,1))
+        bpy.ops.transform.resize(value=amProperty.GenMechResize)
+        #bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='FACE', action='TOGGLE')
+        bpy.ops.object.mode_set(mode='OBJECT')
+    else:
+        bpy.ops.transform.resize(value=(1,1,1))
+
+def GenMechSkinResize_update(self, context):
+    amProperty = context.scene.amProperties
+    sel = bpy.context.selected_objects
+    if sel is not None:
+        if amProperty.GenMechSkinSizeBool == True:
+            bpy.ops.object.mode_set(mode='OBJECT')
+                #   bpy.ops.object.select_all(action='DESELECT')
+                #bpy.context.active_object
+                #bpy.ops.mesh.select_all(action='TOGGLE')
+            bpy.ops.object.mode_set(mode='EDIT')
+            bpy.ops.mesh.select_all(action='SELECT')    
+            bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT', action='TOGGLE')
+            bpy.ops.mesh.select_all(action='SELECT')
+            bpy.ops.transform.skin_resize(value=(amProperty.GenMechSkinResize), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+            #bpy.ops.transform.skin_resize(value=amProperty.GenMechSkinResize)
+            #bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='FACE', action='TOGGLE')
+            bpy.ops.object.mode_set(mode='OBJECT')
+    else:
+            #amProperty.GenMechSkinResize = (1,1,1)
+            #bpy.ops.transform.skin_resize(value=amProperty.GenMechSkinResize)
+        bpy.ops.transform.skin_resize(value=(1,1,1))
+
+def set_GenMechResize(self, value):
+    #x=0.1
+    self["Bevel0Enum"] = (1+x,1,1)
+
+def get_Bevel0Enum(self):
+    ob = bpy.context.selected_objects
+    #bpy.context.view_layer.objects.active = ob
+    amProperty = bpy.context.scene.amProperties
+    
+    if bpy.context.object.modifiers.get("Bevel"):
+        if ob is not None:
+            amProperty.GenMechBevel0Enum = bpy.context.object.modifiers["Bevel"].offset_type
+        #self["Bevel0Enum"] = amProperty.GenMechBevel0Enum
+    #bpy.context.object.modifiers["Bevel"].offset_type =
+            return self.get("Bevel0Enum")
+    else:
+        self["Bevel0Enum"] = 5
+    
+    return self["Bevel0Enum"]
+    
+
+    
+    '''
+    if bpy.context.object.modifiers["Bevel"].offset_type == 'OFFSET':
+        return 1
+    elif bpy.context.object.modifiers["Bevel"].offset_type == 'WIDTH':
+        return 2
+    elif bpy.context.object.modifiers["Bevel"].offset_type == 'DEPTH':
+        return 3
+    elif bpy.context.object.modifiers["Bevel"].offset_type == 'PERCENT':
+        return 4
+    #return ob.modifiers["Bevel"].offset_type
+    '''
+
+def set_Bevel0Enum(self, value):
+    #print("setting value", value)
+    amProperty = bpy.context.scene.amProperties
+    #bpy.context.object.modifiers["Bevel"].offset_type = amProperty.GenMechBevel0Enum
+    #value = amProperty.GenMechBevel0Enum
+    #amProperty.GenMechBevel0Enum = bpy.context.object.modifiers["Bevel"].offset_type
+    '''
+    amProperty = bpy.context.scene.amProperties
+    sel = bpy.context.selected_objects
+    for ob in sel:
+        bpy.context.view_layer.objects.active = ob
+        ob.modifiers["Bevel"].offset_type = amProperty.GenMechBevel0Enum
+        value = amProperty.GenMechBevel0Enum
+        #return amProperty.GenMechBevel0Enum
+    '''
+    '''
+    ob = bpy.context.selected_objects
+    value = amProperty.GenMechBevel0Enum
+    if ob is not None:
+        if self["Bevel0Enum"] == 1:
+            bpy.context.object.modifiers["Bevel"].offset_type = 'OFFSET'
+        elif self["Bevel0Enum"] == 2:
+            bpy.context.object.modifiers["Bevel"].offset_type = 'WIDTH'
+        elif self["Bevel0Enum"] == 3:
+            bpy.context.object.modifiers["Bevel"].offset_type = 'DEPTH'
+        elif self["Bevel0Enum"] == 4:
+            bpy.context.object.modifiers["Bevel"].offset_type = 'PERCENT'
+        else:
+            self["Bevel0Enum"] = value
+        '''
+    self["Bevel0Enum"] = value
 
 '''
 def UVpack():

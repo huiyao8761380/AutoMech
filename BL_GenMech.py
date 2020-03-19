@@ -19,7 +19,7 @@ class GenMech(bpy.types.Operator):
         sel = bpy.context.selected_objects
         amProperty = context.scene.amProperties
 
-
+        #if 'metarig' in rig.name :请添加这个判断
         for ob in sel:
             bpy.context.view_layer.objects.active = ob
             #for mod in [m for m in ob.modifiers if m.type != 'SKIN']:

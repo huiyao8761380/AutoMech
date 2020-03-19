@@ -5,6 +5,8 @@ from . BL_EdgesGen import EdgesGen
 from . BL_Properties import AMProperties
 from . BL_Tool import *
 from . BL_MechClean import MechClean
+from . BL_AddRig import AddRig
+
 from bpy.types import Panel,Operator,PropertyGroup
 from bpy.props import FloatProperty, PointerProperty
 
@@ -84,6 +86,15 @@ class AutoMechPanel(bpy.types.Panel):
         row6.prop(amProperty, "GenMechMirrorBoll")
         row6.prop(amProperty, "GenMechResizeBoll")
 
+        if amProperty.GenMechResizeBoll == True:
+            col6.prop(amProperty, "GenMechResize")
+            
+        row6.prop(amProperty, "GenMechSkinSizeBool")
+
+        if amProperty.GenMechSkinSizeBool == True:
+            col6.prop(amProperty, "GenMechSkinResize")
+        
+
         col8 = layout.column(align=True)
         row8 = col8.row(align=True)
 
@@ -96,12 +107,15 @@ class AutoMechPanel(bpy.types.Panel):
         row7 = col7.row(align=True)
 
         col6.prop(amProperty, "GenMechRemeshEnum")
+        col6.prop(amProperty, "GenMechBevel0Enum")
+        if amProperty.GenMechBevel0Enum =='PERCENT':
+            col6.prop(sampleProperty, "Bevel0float")
 
-        col6.operator("object.bl_genmech" , text = "2.Gen Mech")
-        col6.operator("am.applymodify" , text = "3.ApplyMechModifiers")
-        col6.operator("object.mechclean" , text = "4.MechClean(Edit)")
+        col7.operator("object.bl_genmech" , text = "2.Gen Mech")
+        col7.operator("am.applymodify" , text = "3.ApplyMechModifiers")
+        col7.operator("object.mechclean" , text = "4.MechClean(Edit)")
         row7.prop(amProperty, "GenMechBemeshClean")
         row7.prop(amProperty, "GenMechUVPackmaster")
         col7.operator("object.applyclean" , text = "5.ApplyClean(Edit)")
-        
+        col7.operator("aw.addrig" , text = "6.AddRig")
 
