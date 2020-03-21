@@ -24,6 +24,8 @@ from . BL_Properties import AMProperties
 from . BL_Tool import *
 from . BL_MechClean import MechClean
 from . BL_AddRig import AddRig
+from . BL_BindRig import BindRig
+from . BL_WeightRig import WeightRig
 
 from bpy.types import Panel,Operator,PropertyGroup
 
@@ -50,7 +52,7 @@ SamplePropertyGroup = type(
     })
 
 
-classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup, AMProperties, ApplyModify, MechClean, ApplyClean, AddRig)
+classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup, AMProperties, ApplyModify, MechClean, ApplyClean, AddRig, BindRig, WeightRig)
 #register, unregister = bpy.utils.register_classes_factory(classes)
 
 

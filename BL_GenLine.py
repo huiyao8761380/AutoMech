@@ -44,7 +44,7 @@ class GenLine(bpy.types.Operator):
             myedges = EdgesGen(edgeName,edgeMin,edgeMax,edgeVNumber,edgeLocation)
             myedges.add_EdgeMesh()#组成头部等身体各部位
 
-        elif amProperty.GenLineEnum =='GenLineMechBody':
+        elif amProperty.GenLineEnum =='GenLineMechBody':#可以删掉不要的物体根据没有的名字重新生成
             edgeName= "1GenLineLeg"
             
             sampleProperty.edgeMin = 0
@@ -68,6 +68,10 @@ class GenLine(bpy.types.Operator):
 
             genLeg = EdgesGen(edgeName,edgeMin,edgeMax,edgeVNumber,edgeLocation)
             genLeg.add_EdgeMesh()
+
+            
+
+
 
         elif amProperty.GenLineEnum =='GenLineStruct':
             edgeName= "1GenLineStruct"

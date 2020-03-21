@@ -345,7 +345,7 @@ def GenMechSkinResize_update(self, context):
 
 def set_GenMechResize(self, value):
     #x=0.1
-    self["Bevel0Enum"] = (1+x,1,1)
+    self["Bevel0Enum"] = (1,1,1)
 
 def get_Bevel0Enum(self):
     ob = bpy.context.selected_objects
