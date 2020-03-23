@@ -32,28 +32,31 @@ def find_object(find_name,old_col,new_col):#是调用上面两个函数的函数
                 #if aready in coll
                 new_collection.objects.link(cube)  # put the cube in the new collection 从新合集中添加物体
                 cube_collection.objects.unlink(cube)  # remove it from the old collection 从旧合集中删除物体
-                cube.name = new_col
+                #cube.name = new_col
 
-def only_find_object(find_name,new_col):#是调用上面两个函数的函数，所有输入都为’‘ 或“”
-    for childObject in bpy.data.objects:
+def only_move_object(old_col,new_col):#是调用上面两个函数的函数，所有输入都为’‘ 或“”
+    genLine_result = bpy.data.collections[old_col]#在这个合集中找到所有物体，修改这里的合集0AutoMech
+    if len(genLine_result.objects) > 0:#如果在当前Collection中有物体
+        for childObject in genLine_result.objects:
             #此处添加的代码判断它的名字来获取
-        if find_name in childObject.name:#如果该物体的名字中出现Cube
+            #if len(childObject.data.vertices) <=2500:
+            #if find_name in childObject.name:#如果该物体的名字中出现Cube
             childObject.select_set(True)#选择所有找到有cube字符的物体
             cube = bpy.data.objects[childObject.name]#选择这些物体并赋值给cube
-            #cube_collection = find_collection(bpy.context, cube)#通过函数find_collection制作合集
-            new_collection = make_collection(new_col, "0AutoMech")#NEW col 将合集交给1GenLine
+            cube_collection = find_collection(bpy.context, cube)#通过函数find_collection制作合集
+            new_collection = make_collection(new_col, cube_collection)#NEW col 将合集交给1GenLine
             new_collection.objects.link(cube)  # put the cube in the new collection 从新合集中添加物体
-            bpy.data.collections["0AutoMech"].objects.link(cube)  # remove it from the old collection 从旧合集中删除物体
-            cube.name = new_col
+            cube_collection.objects.unlink(cube)  # remove it from the old collection 从旧合集中删除物体
 
 class ApplyModify(bpy.types.Operator):
     bl_idname = "am.applymodify"
     bl_label = "Apply Modify"
-    bl_description = "Just Apply Modify Operator" 
+    bl_description = "Apply Modify,ctrl+J you like,then check name not have '.001' etc" 
     bl_options = {'REGISTER'}
 
     def execute(self, context):
-        find_object('2GenMech','2GenMech',"3ApplyMech")#这里需要改命名
+        #find_object('1GenLine','2GenMech',"3ApplyMech")#这里需要改命名
+        only_move_object('2GenMech',"3ApplyMech")
         #rename_object('GenMech')
         sel = bpy.context.selected_objects
         amProperty = context.scene.amProperties

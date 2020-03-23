@@ -41,7 +41,7 @@ class EdgesGen:
         col_name="0AutoMech"#1设置集合名字
 
         MyMesh = bpy.data.meshes.new(self.name)#Name in edit mesh
-        MyObject = bpy.data.objects.new(MyMesh.name, MyMesh)#name in object
+        MyObject = bpy.data.objects.new(self.name, MyMesh)#name in object
         
         cube_collection = find_collection(bpy.context, MyObject)#2通过函数find_collection制作合集
         new_collection = make_collection(col_name,cube_collection)#3NEW col 将合集交给1GenLine

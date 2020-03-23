@@ -14,7 +14,8 @@ class GenMech(bpy.types.Operator):
     bl_options = {'REGISTER'}
 
     def execute(self, context):
-        find_object('1GenLine','0AutoMech',"2GenMech")
+        #find_object('1GenLine','0AutoMech',"2GenMech")
+        only_move_object('0AutoMech',"2GenMech")
         #rename_object('GenMech')
         sel = bpy.context.selected_objects
         amProperty = context.scene.amProperties
@@ -221,6 +222,21 @@ class GenMech(bpy.types.Operator):
                         if Mirror:
                             ob.modifiers.remove(Mirror)
                         mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
+                        if '_l' in ob.name:
+                            mod_Mirror.use_axis[0] = False
+                            mod_Mirror.use_axis[1] = True
+                            mod_Mirror.use_bisect_axis[0] = False
+                            mod_Mirror.use_bisect_flip_axis[0] = False
+                            if 'thigh_l' in ob.name:
+                                mod_Mirror.use_axis[0] = True
+                                mod_Mirror.use_axis[1] = False
+                            elif 'calf_l' in ob.name:
+                                mod_Mirror.use_axis[0] = True
+                                mod_Mirror.use_axis[1] = False
+                            elif 'foot_l' in ob.name:
+                                mod_Mirror.use_axis[0] = True
+                                mod_Mirror.use_axis[1] = False
+                            
                     else:
                         if Mirror:
                             ob.modifiers.remove(Mirror)
@@ -280,6 +296,20 @@ class GenMech(bpy.types.Operator):
                         if Mirror:
                             ob.modifiers.remove(Mirror)
                         mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
+                        if '_l' in ob.name:
+                            mod_Mirror.use_axis[0] = False
+                            mod_Mirror.use_axis[1] = True
+                            mod_Mirror.use_bisect_axis[0] = False
+                            mod_Mirror.use_bisect_flip_axis[0] = False
+                            if 'thigh_l' in ob.name:
+                                mod_Mirror.use_axis[0] = True
+                                mod_Mirror.use_axis[1] = False
+                            elif 'calf_l' in ob.name:
+                                mod_Mirror.use_axis[0] = True
+                                mod_Mirror.use_axis[1] = False
+                            elif 'foot_l' in ob.name:
+                                mod_Mirror.use_axis[0] = True
+                                mod_Mirror.use_axis[1] = False
                     else:
                         if Mirror:
                             ob.modifiers.remove(Mirror)

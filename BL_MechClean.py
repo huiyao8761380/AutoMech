@@ -135,7 +135,8 @@ class MechClean(bpy.types.Operator):
         context['area'] = area
         context['region'] = region
         context['space_data'] = space
-        find_object('3ApplyMech','3ApplyMech',"4MechClean")
+        #find_object('1GenLine','3ApplyMech',"4MechClean")
+        only_move_object('3ApplyMech',"4MechClean")
         bpy.context.space_data.overlay.show_face_orientation = True#法线
         sel = bpy.context.selected_objects
         for ob in sel:

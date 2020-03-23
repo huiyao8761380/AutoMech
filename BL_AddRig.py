@@ -40,7 +40,7 @@ class AddRig(bpy.types.Operator):
 
                 bpy.context.object.data.bones["pelvis.L"].name = "pelvis_l"
                 bpy.context.object.data.bones["pelvis.R"].name = "pelvis_r"
-                bpy.context.object.data.bones["thigh.L"].name = "thigh_r"
+                bpy.context.object.data.bones["thigh.L"].name = "thigh_l"
                 bpy.context.object.data.bones["thigh.R"].name = "thigh_r"
                 bpy.context.object.data.bones["shin.L"].name = "calf_l"
                 bpy.context.object.data.bones["shin.R"].name = "calf_r"
@@ -57,12 +57,53 @@ class AddRig(bpy.types.Operator):
                 bpy.ops.object.mode_set(mode='EDIT')
                 bpy.ops.armature.bone_primitive_add(name='root')
                 bpy.ops.transform.rotate(value=-1.5708, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                #bpy.context.scene.tool_settings.transform_pivot_point = 'ACTIVE_ELEMENT'
+                #bpy.ops.transform.rotate(value=-0.366519, orient_axis='Y', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
                 bpy.ops.object.mode_set(mode='OBJECT')
                 bpy.ops.object.mode_set(mode='EDIT')
-                bpy.context.object.data.bones["pelvis"].select = True
-                bpy.context.object.data.bones["root"].select = True
+                #bpy.context.object.data.bones["pelvis"].select = True
+                #bpy.context.object.data.bones["root"].select = True
+                bpy.ops.armature.select_all(action='DESELECT')
                 bpy.context.object.data.edit_bones['pelvis'].parent = bpy.context.object.data.edit_bones['root']
                 #bpy.ops.armature.parent_set(type='OFFSET')
+                bpy.context.scene.tool_settings.transform_pivot_point = 'ACTIVE_ELEMENT'
+                bpy.context.object.data.edit_bones["upperarm_l"].select_head = True
+                bpy.context.object.data.edit_bones["upperarm_l"].select_tail = True
+                bpy.context.object.data.edit_bones["upperarm_l"].select = True
+
+                bpy.context.object.data.edit_bones["lowerarm_l"].select = True
+                bpy.context.object.data.edit_bones["lowerarm_l"].select_head = True
+                bpy.context.object.data.edit_bones["lowerarm_l"].select_tail = True
+
+                bpy.context.object.data.edit_bones["hand_l"].select = True
+                bpy.context.object.data.edit_bones["hand_l"].select_head = True
+                bpy.context.object.data.edit_bones["hand_l"].select_tail = True
+
+                bpy.context.scene.tool_settings.transform_pivot_point = 'ACTIVE_ELEMENT'
+
+
+                bpy.ops.transform.rotate(value=-0.5, orient_axis='Y', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                #bpy.ops.transform.translate(value=(0, 0, 0.597073), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                bpy.ops.transform.translate(value=(0.22, 0, -0.355), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                bpy.ops.armature.select_all(action='DESELECT')
+
+                bpy.context.object.data.edit_bones["upperarm_r"].select_head = True
+                bpy.context.object.data.edit_bones["upperarm_r"].select_tail = True
+                bpy.context.object.data.edit_bones["upperarm_r"].select = True
+
+                bpy.context.object.data.edit_bones["lowerarm_r"].select = True
+                bpy.context.object.data.edit_bones["lowerarm_r"].select_head = True
+                bpy.context.object.data.edit_bones["lowerarm_r"].select_tail = True
+
+                bpy.context.object.data.edit_bones["hand_r"].select = True
+                bpy.context.object.data.edit_bones["hand_r"].select_head = True
+                bpy.context.object.data.edit_bones["hand_r"].select_tail = True
+
+                bpy.ops.transform.rotate(value=0.5, orient_axis='Y', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                #bpy.ops.transform.translate(value=(0, 0, 0.597073), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                bpy.ops.transform.translate(value=(-0.059, 0, 0.275), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, True), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                bpy.ops.armature.select_all(action='DESELECT')
                 
                 bpy.ops.object.mode_set(mode='OBJECT')
                 
