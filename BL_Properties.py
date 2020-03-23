@@ -140,3 +140,15 @@ class AMProperties(PropertyGroup):
         default = (1,1,1),
         update=GenMechSkinResize_update
         )
+
+    GenMechRemeshScale: FloatProperty(
+        name="Remesh Scale",
+        description="修改重构网格的缩放大小",
+        default = 0.88,
+        min=0,
+        max=0.99,
+        step=0.1,
+        update=GenMechRemeshScale_update
+        )
+
+        #FloatProperty(name="width_pct", default=37, min=0, max=0.99

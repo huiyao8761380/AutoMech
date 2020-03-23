@@ -346,6 +346,22 @@ def GenMechSkinResize_update(self, context):
             #bpy.ops.transform.skin_resize(value=amProperty.GenMechSkinResize)
         bpy.ops.transform.skin_resize(value=(1,1,1))
 
+
+def GenMechRemeshScale_update(self, context):
+    amProperty = context.scene.amProperties
+    #sampleProperty = context.scene.samplePropertyGroup
+    sel = bpy.context.selected_objects
+    for ob in sel:
+        if ob.modifiers.get("Remesh"):
+            bpy.context.view_layer.objects.active = ob
+            ob.modifiers["Remesh"].scale = amProperty.GenMechRemeshScale
+
+
+
+
+
+
+
 def set_GenMechResize(self, value):
     #x=0.1
     self["Bevel0Enum"] = (1,1,1)

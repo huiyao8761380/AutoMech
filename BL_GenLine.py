@@ -53,7 +53,7 @@ class GenLine(bpy.types.Operator):
             thigh_rName= "thigh_l"
             
 
-            sampleProperty.edgeLoc = (0.55,0.05,2.4)
+            sampleProperty.edgeLoc = (0.5,0.05,2.4)
             
 
             edgeMin = sampleProperty.edgeMin
@@ -75,7 +75,7 @@ class GenLine(bpy.types.Operator):
 
             calf_lName = "calf_l"
 
-            sampleProperty.edgeLoc = (0.55,0,0.8)
+            sampleProperty.edgeLoc = (0.5,0,0.8)
 
             sampleProperty.edgeXYZ =True
             sampleProperty.xuMin = 0
@@ -90,15 +90,15 @@ class GenLine(bpy.types.Operator):
 
             foot_lName = "foot_l"
 
-            sampleProperty.edgeLoc = (0.55,0,0.1)
+            sampleProperty.edgeLoc = (0.5,0,0.1)
 
 
 
             sampleProperty.edgeXYZ =True
-            sampleProperty.xuMin = -0.3
+            sampleProperty.xuMin = 0.05
             sampleProperty.yuMin = -1.4
             sampleProperty.zuMin = 0.05
-            sampleProperty.xvMax = 0.3
+            sampleProperty.xvMax = 0.6
             sampleProperty.yvMax = 0.6
             sampleProperty.zvMax = 0.5
 
@@ -132,10 +132,10 @@ class GenLine(bpy.types.Operator):
             sampleProperty.edgeLoc = (0,0.1,4.1)
 
             sampleProperty.edgeXYZ =True
-            sampleProperty.xuMin = -0.6
-            sampleProperty.yuMin = -0.4
+            sampleProperty.xuMin = -0.4
+            sampleProperty.yuMin = -0.3
             sampleProperty.zuMin = -0.1
-            sampleProperty.xvMax = 0.8
+            sampleProperty.xvMax = 0.5
             sampleProperty.yvMax = 0.4
             sampleProperty.zvMax = 1.3
 
@@ -226,10 +226,10 @@ class GenLine(bpy.types.Operator):
             sampleProperty.edgeXYZ =True        
             sampleProperty.xuMin = -1.4
             sampleProperty.yuMin = -0.1
-            sampleProperty.zuMin = -0.3
+            sampleProperty.zuMin = -0.2
             sampleProperty.xvMax = 1.4
             sampleProperty.yvMax = 0.2
-            sampleProperty.zvMax = 0.3
+            sampleProperty.zvMax = 0.1
 
             upperarm_l = EdgesGen(upperarm_lName,edgeMin,edgeMax,edgeVNumber,edgeLocation)
             upperarm_l.add_EdgeMesh()

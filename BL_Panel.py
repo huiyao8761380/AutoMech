@@ -109,6 +109,7 @@ class AutoMechPanel(bpy.types.Panel):
         col8 = layout.column(align=True)
         row8 = col8.row(align=True)
         col6.prop(amProperty, "GenMechRemeshEnum")
+        col6.prop(amProperty, "GenMechRemeshScale")#
         col6.prop(amProperty, "GenMechBevel0Enum")
         if amProperty.GenMechBevel0Enum =='PERCENT':
             col6.prop(sampleProperty, "Bevel0float")

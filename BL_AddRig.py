@@ -109,7 +109,7 @@ class AddRig(bpy.types.Operator):
                 
 
 
-                bpy.ops.transform.resize(value=(5.5, 3.5, 3.5), orient_type='CURSOR', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                bpy.ops.transform.resize(value=(4.8, 3.5, 3.5), orient_type='CURSOR', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
                 bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
                 
                 for rig in bpy.data.objects:

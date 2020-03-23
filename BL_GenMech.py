@@ -313,6 +313,48 @@ class GenMech(bpy.types.Operator):
                     else:
                         if Mirror:
                             ob.modifiers.remove(Mirror)
+                        
+
+
+            for mod in ob.modifiers:
+                mod.show_expanded = False
+                mod.show_in_editmode = False
+
+        amProperty.GenMechSkinResize =  (1,1,1)
+        genLine_result = bpy.data.collections["2GenMech"]#在这个合集中找到所有物体，修改这里的合集0AutoMech
+        if len(genLine_result.objects) > 12:#如果在当前Collection中有物体
+            for childObject in genLine_result.objects:
+        #for ob in sel:
+                bpy.ops.object.select_all(action='DESELECT')
+                childObject.select_set(True)
+                bpy.context.view_layer.objects.active = childObject
+
+                if 'neck_01' in childObject.name or 'hand_l' in childObject.name:
+                    if bpy.context.mode =='OBJECT':
+                        bpy.ops.object.mode_set(mode='EDIT')
+                        #bpy.ops.mesh.select_all(action='SELECT')    
+                        bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT', action='TOGGLE')
+                        bpy.ops.mesh.select_all(action='SELECT')
+                        bpy.ops.transform.skin_resize(value=(0.6,0.6,0.6), mirror=True, use_proportional_edit=False, proportional_edit_falloff='RANDOM', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                        bpy.ops.transform.skin_resize(value=amProperty.GenMechSkinResize, mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                        #bpy.ops.transform.skin_resize(value=amProperty.GenMechSkinResize)
+                        #bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='FACE', action='TOGGLE')
+                        bpy.ops.object.mode_set(mode='OBJECT')
+                
+                elif '_l' in childObject.name or 'head' in childObject.name or 'spine_01' in childObject.name:
+                    if bpy.context.mode =='OBJECT':
+                        bpy.ops.object.mode_set(mode='EDIT')
+                        #bpy.ops.mesh.select_all(action='SELECT')
+                        bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT', action='TOGGLE')
+                        bpy.ops.mesh.select_all(action='SELECT')
+                        bpy.ops.transform.skin_resize(value=(0.8,0.8,0.8), mirror=True, use_proportional_edit=False, proportional_edit_falloff='RANDOM', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                        bpy.ops.transform.skin_resize(value=amProperty.GenMechSkinResize, mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                        #bpy.ops.transform.skin_resize(value=amProperty.GenMechSkinResize, mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+                        #bpy.ops.transform.skin_resize(value=amProperty.GenMechSkinResize)
+                        #bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='FACE', action='TOGGLE')
+                        bpy.ops.object.mode_set(mode='OBJECT')
+                
+
 #bpy.ops.mesh.bisect(plane_co=(0, 0, 50), plane_no=(1, 0, 0), use_fill=False, clear_inner=True, clear_outer=False, xstart=243, xend=243, ystart=349, yend=20)
 #bpy.ops.object.editmode_toggle()
 #bpy.ops.mesh.select_all(action='TOGGLE')
@@ -326,30 +368,8 @@ class GenMech(bpy.types.Operator):
 #bpy.ops.wm.tool_set_by_id(name="builtin.select_box")
 #bpy.ops.view3d.view_orbit(angle=5.0, type='ORBITLEFT') x-bpy.ops.view3d.view_orbit(type='ORBITLEFT')
 #
-            for mod in ob.modifiers:
-                mod.show_expanded = False
-                mod.show_in_editmode = False
-            '''
-            mod_Skin.show_in_editmode = True
-            mod_Bevel.show_in_editmode = False
-            mod_Bevel1.show_in_editmode = False
-            mod_EdgeSplit.show_in_editmode = False
-            mod_Solidify.show_in_editmode = False
-            mod_Bevel2.show_in_editmode = False
 
 
-            mod_Skin.show_expanded = False
-            mod_Remesh.show_expanded = False
-            mod_Bevel.show_expanded = False
-            mod_Decimate.show_expanded = False
-            mod_Decimate2.show_expanded = False
-            mod_Bevel1.show_expanded = False
-            mod_EdgeSplit.show_expanded = False
-            mod_Solidify.show_expanded = False
-            mod_Bevel2.show_expanded = False
-            mod_Mirror.show_expanded = False
-            mod_Displace.show_expanded = False
-            '''
 
 
 
@@ -375,3 +395,25 @@ class GenMech(bpy.types.Operator):
         '''
         self.report({'INFO'}, "2.Gen Mech:如果物体顶点数小于2500执行")
         return {'FINISHED'}
+
+        '''
+            mod_Skin.show_in_editmode = True
+            mod_Bevel.show_in_editmode = False
+            mod_Bevel1.show_in_editmode = False
+            mod_EdgeSplit.show_in_editmode = False
+            mod_Solidify.show_in_editmode = False
+            mod_Bevel2.show_in_editmode = False
+
+
+            mod_Skin.show_expanded = False
+            mod_Remesh.show_expanded = False
+            mod_Bevel.show_expanded = False
+            mod_Decimate.show_expanded = False
+            mod_Decimate2.show_expanded = False
+            mod_Bevel1.show_expanded = False
+            mod_EdgeSplit.show_expanded = False
+            mod_Solidify.show_expanded = False
+            mod_Bevel2.show_expanded = False
+            mod_Mirror.show_expanded = False
+            mod_Displace.show_expanded = False
+        '''
