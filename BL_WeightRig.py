@@ -6,7 +6,7 @@ from . BL_Tool import *
 class WeightRig(bpy.types.Operator):
     bl_idname = "aw.weightrig"
     bl_label = "Weight Rig"
-    bl_description = "Paint Weight for Rig"
+    bl_description = "Paint Weight for Rig,在此之前需要应用修改器"
     bl_options = {"REGISTER"}
 
     @classmethod

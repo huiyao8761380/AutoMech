@@ -52,7 +52,7 @@ SamplePropertyGroup = type(
     })
 
 
-classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup, AMProperties, ApplyModify, MechClean, ApplyClean, AddRig, BindRig, WeightRig)
+classes = ( AutoMechPanel, GenLine, GenMech, SamplePropertyGroup, AMProperties, ApplyModify, MechClean, ApplyClean, AddRig, BindRig, WeightRig, MirrorSelect, ReName)
 #register, unregister = bpy.utils.register_classes_factory(classes)
 
 

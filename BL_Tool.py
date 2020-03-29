@@ -134,8 +134,22 @@ class ApplyClean(bpy.types.Operator):
         bpy.ops.mesh.select_all(action='SELECT')
 
         if amProperty.GenMechMirrorBoll ==True:
-            bpy.ops.mesh.bisect(plane_co=(0, 0, 50), plane_no=(1, 0, 0), use_fill=False, clear_inner=True, clear_outer=False, xstart=243, xend=243, ystart=349, yend=20)
-        
+            if "_l" in bpy.context.object.data.name or "_r" in bpy.context.object.data.name :
+                if "clavicle" in bpy.context.object.data.name:
+                    bpy.ops.mesh.bisect(plane_co=(-1, 0.2, -10), plane_no=(0, 1, 0), use_fill=False, clear_inner=False, clear_outer=True, xstart=204, xend=713, ystart=198, yend=196)
+                elif "upperarm" in bpy.context.object.data.name:
+                    bpy.ops.mesh.bisect(plane_co=(-1, 0.15, -10), plane_no=(0, 1, 0), use_fill=False, clear_inner=False, clear_outer=True, xstart=204, xend=713, ystart=198, yend=196)
+                elif "lowerarm" in bpy.context.object.data.name:
+                    bpy.ops.mesh.bisect(plane_co=(-1, 0.2, -10), plane_no=(0, 1, 0), use_fill=False, clear_inner=False, clear_outer=True, xstart=204, xend=713, ystart=198, yend=196)
+                elif "hand" in bpy.context.object.data.name:
+                    bpy.ops.mesh.bisect(plane_co=(-1, 0.2, -10), plane_no=(0, 1, 0), use_fill=False, clear_inner=False, clear_outer=True, xstart=204, xend=713, ystart=198, yend=196)
+                else:
+                    bpy.ops.mesh.bisect(plane_co=(0.5, 0, 50), plane_no=(1, 0, 0), use_fill=False, clear_inner=True, clear_outer=False, xstart=243, xend=243, ystart=349, yend=20)
+            else:
+                bpy.ops.mesh.bisect(plane_co=(0, 0, 50), plane_no=(1, 0, 0), use_fill=False, clear_inner=True, clear_outer=False, xstart=243, xend=243, ystart=349, yend=20)
+
+
+
         bpy.ops.mesh.select_all(action='SELECT')
 
         bpy.ops.uv.smart_project()
@@ -177,6 +191,18 @@ class ApplyClean(bpy.types.Operator):
             #bpy.ops.uv.smart_project()
             #bpy.ops.object.mode_set(mode='OBJECT')
             bpy.ops.object.modifier_add(type='MIRROR')
+            if "clavicle" in bpy.context.object.data.name:
+                bpy.context.object.modifiers["Mirror"].use_axis[0] = False
+                bpy.context.object.modifiers["Mirror"].use_axis[1] = True
+            elif "upperarm" in bpy.context.object.data.name:
+                bpy.context.object.modifiers["Mirror"].use_axis[0] = False
+                bpy.context.object.modifiers["Mirror"].use_axis[1] = True
+            elif "lowerarm" in bpy.context.object.data.name:
+                bpy.context.object.modifiers["Mirror"].use_axis[0] = False
+                bpy.context.object.modifiers["Mirror"].use_axis[1] = True
+            elif "hand" in bpy.context.object.data.name:
+                bpy.context.object.modifiers["Mirror"].use_axis[0] = False
+                bpy.context.object.modifiers["Mirror"].use_axis[1] = True       
             #bpy.ops.object.modifier_apply(apply_as='DATA', modifier="Mirror")
         #else:
             #bpy.ops.mesh.select_all(action='SELECT')
@@ -190,6 +216,87 @@ class ApplyClean(bpy.types.Operator):
         #edit
         self.report({'INFO'}, "5.Apply Clean")
         return {'FINISHED'}
+
+class ReName(bpy.types.Operator):
+    bl_idname = "am.rename"
+    bl_label = "ReName"
+    bl_description = "Jast ReName" 
+    bl_options = {'REGISTER'}
+
+    def execute(self, context):
+        for reobj in bpy.context.selected_objects:
+            if '.' in reobj.name:#
+                reobj.name = reobj.name[:-4]
+                reobj.data.name = reobj.name
+
+        self.report({'INFO'}, "ReName: delete '.001' ")
+        return {'FINISHED'}
+
+
+
+class MirrorSelect(bpy.types.Operator):
+    bl_idname = "am.mirrorselect"
+    bl_label = "Mirror Select"
+    bl_description = "Mirror Select form _l to _r" 
+    bl_options = {'REGISTER'}
+
+    def execute(self, context):
+        #if bpy.context.mode !='OBJECT':
+        #bpy.ops.object.mode_set(mode='OBJECT')
+        sel = bpy.context.selected_objects
+        amProperty = context.scene.amProperties
+        #bpy.ops.object.mode_set(mode='OBJECT')
+        if '_l' in bpy.context.object.name:
+            bpy.ops.object.duplicate_move(OBJECT_OT_duplicate={"linked":False, "mode":'TRANSLATION'}, TRANSFORM_OT_translate={"value":(0, 0, 0), "orient_type":'GLOBAL', "orient_matrix":((1, 0, 0), (0, 1, 0), (0, 0, 1)), "orient_matrix_type":'GLOBAL', "constraint_axis":(False, False, False), "mirror":True, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "release_confirm":False, "use_accurate":False})
+            bpy.context.scene.tool_settings.transform_pivot_point = 'CURSOR'
+            bpy.ops.transform.mirror(orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+
+
+        for rob in bpy.data.objects:
+            if '_l' in rob.name:
+                if '.' in rob.name:#
+                    rob.name = rob.name[:-6] + "_r"
+                    rob.data.name = rob.name
+            #if rob.name.endswith("_l"):
+                #rob.name = rob.name[:-2] + "_r"
+                #rob.data.name = rob.name
+
+                #bpy.context.object.data.name = "upperarm_r"
+        '''
+        for ob in sel:
+            if '_l' in ob.name:
+                ob.select_set(True)
+                #bpy.context.view_layer.objects.active = ob
+                bpy.ops.object.duplicate_move(OBJECT_OT_duplicate={"linked":False, "mode":'TRANSLATION'}, TRANSFORM_OT_translate={"value":(0, 0, 0), "orient_type":'GLOBAL', "orient_matrix":((1, 0, 0), (0, 1, 0), (0, 0, 1)), "orient_matrix_type":'GLOBAL', "constraint_axis":(False, False, False), "mirror":True, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "release_confirm":False, "use_accurate":False})
+
+                #bpy.context.view_layer.objects.active = ob
+                if '.' in bpy.context.object.name:
+                    bpy.context.object.name = bpy.context.object.name[:-4]
+                if bpy.context.object.name.endswith("_l"):
+                    bpy.context.object.name = bpy.context.object.name[:-2] + "_r"
+                    bpy.context.object.data.name = bpy.context.object.name
+                #bpy.context.object.data.name = "upperarm_r"
+
+                #bpy.context.object.select_set(False)
+
+
+        for rob in bpy.data.objects:
+            if '_r' in rob.name:
+                ob.select_set(True)
+                bpy.context.view_layer.objects.active = rob
+                bpy.context.scene.tool_settings.transform_pivot_point = 'CURSOR'
+                bpy.ops.transform.mirror(orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+            '''
+
+
+                #bpy.context.object.location[0] = 0 - bpy.context.object.location[0]
+                #bpy.ops.transform.mirror(orient_type='GLOBAL', constraint_axis=(True, False, False), use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+        
+        self.report({'INFO'}, "6.Mirror Select form _l to _r")
+        return {'FINISHED'}
+
 
 
 def edgeLoc_update(self, context):

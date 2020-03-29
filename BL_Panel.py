@@ -117,10 +117,15 @@ class AutoMechPanel(bpy.types.Panel):
         col6.operator("object.bl_genmech" , text = "2.Gen Mech")
         col7.operator("am.applymodify" , text = "3.ApplyMechModifiers")
         col7.operator("object.mechclean" , text = "4.MechClean(Edit)")
+
         row7.prop(amProperty, "GenMechBemeshClean")
         row7.prop(amProperty, "GenMechUVPackmaster")
+        row7.operator("am.rename" , text = "ReName")
+
         col7.operator("object.applyclean" , text = "5.ApplyClean(Edit)")
-        col8.operator("aw.addrig" , text = "6.AddRig")
-        col8.operator("aw.bindrig" , text = "7.BindAllRig")
-        col8.operator("aw.weightrig" , text = "8.WeightRig")
+        col7.operator("am.mirrorselect" , text = "6.MirrorSelect")
+        
+        col8.operator("aw.addrig" , text = "7.AddRig")
+        col8.operator("aw.bindrig" , text = "8.BindAllRig")
+        col8.operator("aw.weightrig" , text = "9.WeightRig")
 
