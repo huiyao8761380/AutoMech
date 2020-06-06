@@ -91,30 +91,30 @@ class GenMech(bpy.types.Operator):
                         ob.data.materials.append(mat4)
 
 
-                    mat0.diffuse_color = (0, 0.238852, 1, 1)    
-                    mat0.metallic = 0.8
-                    mat0.specular_intensity = 0.1
-                    mat0.roughness = 0.3
+                    mat0.diffuse_color = (0.0908376, 0.0839396, 0.0890834, 1) 
+                    mat0.metallic = 0.85
+                    mat0.specular_intensity = 0.5
+                    mat0.roughness = 0.2
 
-                    mat1.diffuse_color = (1, 0.936776, 0.314941, 1)
-                    mat1.metallic = 1
-                    mat1.specular_intensity = 0.35
-                    mat1.roughness = 0.15
+                    mat1.diffuse_color = (0.00826914, 0.092462, 0.246195, 1)
+                    mat1.metallic = 0.8
+                    mat1.specular_intensity = 0.1
+                    mat1.roughness = 0.3
 
-                    mat2.diffuse_color = (0.056421, 0.104517, 0.195988, 1)
-                    mat2.metallic = 0.75
-                    mat2.specular_intensity = 0.45
-                    mat2.roughness = 0.3
+                    mat2.diffuse_color = (0.650006, 0.324683, 0.10755, 1)
+                    mat2.metallic = 1
+                    mat2.specular_intensity = 0.35
+                    mat2.roughness = 0.15
 
-                    mat3.diffuse_color = (0.22542, 0.499922, 0.638272, 1)
-                    mat3.metallic = 0.85
-                    mat3.specular_intensity = 0.5
-                    mat3.roughness = 0.2
+                    mat3.diffuse_color = (0.0134106, 0.0134106, 0.0134106, 1)
+                    mat3.metallic = 0.6
+                    mat3.specular_intensity = 0
+                    mat3.roughness = 0.7
 
-                    mat4.diffuse_color = (0.0134106, 0.0134106, 0.0134106, 1)
-                    mat4.metallic = 0.6
-                    mat4.specular_intensity = 0
-                    mat4.roughness = 0.7
+                    mat4.diffuse_color = (0.0647879, 0.12211, 0.195988, 1)
+                    mat4.metallic = 0.75
+                    mat4.specular_intensity = 0.45
+                    mat4.roughness = 0.3
 
                     #bpy.context.object.active_material.diffuse_color = (0.8, 0.49499, 0.655768, 1)
                     #bpy.context.object.active_material.diffuse_color = (0.112115, 0.149903, 0.28101, 1)
@@ -184,7 +184,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel.use_only_vertices = True
                     mod_Bevel.use_clamp_overlap = True
                     mod_Bevel.loop_slide = True
-                    mod_Bevel.material = 3         #0
+                    mod_Bevel.material = 1         #0 1323\ 4
 
                     mod_Decimate = ob.modifiers.new("Decimate", "DECIMATE")
                     mod_Decimate.ratio = 0.02
@@ -199,7 +199,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel1.use_only_vertices = True
                     mod_Bevel1.use_clamp_overlap = True
                     mod_Bevel1.loop_slide = True
-                    mod_Bevel1.material = 4         #1
+                    mod_Bevel1.material = 3         #1
 
                     mod_EdgeSplit = ob.modifiers.new("EdgeSplit", "EDGE_SPLIT")
 
@@ -211,7 +211,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel2 = ob.modifiers.new("Bevel.002", "BEVEL")
                     mod_Bevel2.offset_type = 'OFFSET'
                     mod_Bevel2.width = 0.05
-                    mod_Bevel2.material = 1            #
+                    mod_Bevel2.material = 3            #
 
                     mod_Displace = ob.modifiers.new("Displace", "DISPLACE")
                     mod_Displace.direction = 'NORMAL'
@@ -258,7 +258,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel.use_only_vertices = True
                     mod_Bevel.use_clamp_overlap = True
                     mod_Bevel.loop_slide = True
-                    mod_Bevel.material = 3         #0
+                    mod_Bevel.material = 1         #1 1323（4）
 
                     mod_Decimate = ob.modifiers.new("Decimate", "DECIMATE")
                     mod_Decimate.ratio = 0.02
@@ -273,7 +273,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel1.use_only_vertices = True
                     mod_Bevel1.use_clamp_overlap = True
                     mod_Bevel1.loop_slide = True
-                    mod_Bevel1.material = 4         #1
+                    mod_Bevel1.material = 3         #0
 
                     mod_EdgeSplit = ob.modifiers.new("EdgeSplit", "EDGE_SPLIT")
 
@@ -285,7 +285,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel2 = ob.modifiers.new("Bevel.002", "BEVEL")
                     mod_Bevel2.offset_type = 'OFFSET'
                     mod_Bevel2.width = 0.05
-                    mod_Bevel2.material = 1             #
+                    mod_Bevel2.material = 3             #-1
 
                     mod_Displace = ob.modifiers.new("Displace", "DISPLACE")
                     mod_Displace.direction = 'NORMAL'

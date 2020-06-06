@@ -1,6 +1,6 @@
 bl_info = {
     "name" : "AutoMech",
-    "author" : "Tang Hui",
+    "author" : "透过现象看本质(Tang Hui)",
     "description" : "(N key)Do as possible to Auto mechanical modeling , lowpoly and bake to game.",
     "blender" : (2, 82, 7),
     "version" : (0, 0, 1),
