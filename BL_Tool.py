@@ -1,7 +1,7 @@
 import bpy 
-import sys
-sys.path.append(r'C:/Users/Administrator/AppData/Roaming/Blender Foundation/Blender/2.82/scripts/addons/Bmesh clean 2_8x v1_1')
-import __init__
+#import sys
+#sys.path.append(r'C:/Users/Administrator/AppData/Roaming/Blender Foundation/Blender/2.82/scripts/addons/Bmesh clean 2_8x v1_1')
+#import __init__
 
 def find_collection(context, item):
     collections = item.users_collection
@@ -109,7 +109,7 @@ class ApplyClean(bpy.types.Operator):
         bpy.ops.object.modifier_apply(apply_as='DATA', modifier="Weld")
 
 
-
+        '''绝对路径问题
         if amProperty.GenMechBemeshClean ==True:
             bpy.ops.object.mode_set(mode='OBJECT')
             bpy.context.scene.scene_check_set.preset_list = '2 - Blender Default'
@@ -121,7 +121,7 @@ class ApplyClean(bpy.types.Operator):
             __init__.bmesh_clean()
             bpy.ops.object.mode_set(mode='OBJECT')
             #bpy.ops.object.mode_set(mode='EDIT')
-        
+        '''
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.ops.mesh.select_all(action='SELECT')
         bpy.ops.mesh.delete_loose()
