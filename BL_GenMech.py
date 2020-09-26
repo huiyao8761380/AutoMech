@@ -181,7 +181,9 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel = ob.modifiers.new("Bevel", "BEVEL")
                     mod_Bevel.offset_type = 'PERCENT'
                     mod_Bevel.width_pct = 37 #动画
-                    mod_Bevel.use_only_vertices = True
+                    #mod_Bevel.use_only_vertices = True
+                    mod_Bevel.affect = 'VERTICES'
+
                     mod_Bevel.use_clamp_overlap = True
                     mod_Bevel.loop_slide = True
                     mod_Bevel.material = 1         #0 1323\ 4
@@ -196,7 +198,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel1 = ob.modifiers.new("Bevel.001", "BEVEL")
                     mod_Bevel1.offset_type = 'PERCENT'
                     mod_Bevel1.width_pct = 33
-                    mod_Bevel1.use_only_vertices = True
+                    mod_Bevel1.affect = 'VERTICES'
                     mod_Bevel1.use_clamp_overlap = True
                     mod_Bevel1.loop_slide = True
                     mod_Bevel1.material = 3         #1
@@ -255,7 +257,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel = ob.modifiers.new("Bevel", "BEVEL")
                     mod_Bevel.offset_type = 'PERCENT'
                     mod_Bevel.width_pct = 37 #动画
-                    mod_Bevel.use_only_vertices = True
+                    mod_Bevel.affect = 'VERTICES'
                     mod_Bevel.use_clamp_overlap = True
                     mod_Bevel.loop_slide = True
                     mod_Bevel.material = 1         #1 1323（4）
@@ -270,7 +272,7 @@ class GenMech(bpy.types.Operator):
                     mod_Bevel1 = ob.modifiers.new("Bevel.001", "BEVEL")
                     mod_Bevel1.offset_type = 'PERCENT'
                     mod_Bevel1.width_pct = 33
-                    mod_Bevel1.use_only_vertices = True
+                    mod_Bevel1.affect = 'VERTICES'
                     mod_Bevel1.use_clamp_overlap = True
                     mod_Bevel1.loop_slide = True
                     mod_Bevel1.material = 3         #0
@@ -395,25 +397,3 @@ class GenMech(bpy.types.Operator):
         '''
         self.report({'INFO'}, "2.Gen Mech:如果物体顶点数小于2500执行")
         return {'FINISHED'}
-
-        '''
-            mod_Skin.show_in_editmode = True
-            mod_Bevel.show_in_editmode = False
-            mod_Bevel1.show_in_editmode = False
-            mod_EdgeSplit.show_in_editmode = False
-            mod_Solidify.show_in_editmode = False
-            mod_Bevel2.show_in_editmode = False
-
-
-            mod_Skin.show_expanded = False
-            mod_Remesh.show_expanded = False
-            mod_Bevel.show_expanded = False
-            mod_Decimate.show_expanded = False
-            mod_Decimate2.show_expanded = False
-            mod_Bevel1.show_expanded = False
-            mod_EdgeSplit.show_expanded = False
-            mod_Solidify.show_expanded = False
-            mod_Bevel2.show_expanded = False
-            mod_Mirror.show_expanded = False
-            mod_Displace.show_expanded = False
-        '''

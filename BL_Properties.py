@@ -46,13 +46,13 @@ class AMProperties(PropertyGroup):
         name="GenMechEnum",
         description="Gen Mech Enum Modify",
         items=[
-            ('GenMechfy1', "GenMechfy1", ""),
-            ('GenMechfy2', "GenMechfyLow", ""),#重构网格=最大50倍 0.1体素  或0.002
-            ('GenMechstyle2', "GenMechstyle2", "")
+            ('GenMechfy1', "GenMechfyHigh", "Higher Mesh"),
+            ('GenMechfy2', "GenMechfyLow", "Lower Mesh"),#重构网格=最大50倍 0.1体素  或0.002
+            ('GenMechstyle2', "GenMechstyle2", "None")
             #('MODE_GD_MARBLE', "大理石 Marble", ""),
             #('MODE_GD_MUSGRAVE', "马斯格雷夫分形 Musgrave", "")
         ],
-        default="GenMechfy1"
+        default="GenMechfy2"
     )
 
 

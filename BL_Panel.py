@@ -125,7 +125,7 @@ class AutoMechPanel(bpy.types.Panel):
         col7.operator("object.applyclean" , text = "5.ApplyClean(Edit)")
         col7.operator("am.mirrorselect" , text = "6.MirrorSelect")
         
-        col8.operator("aw.addrig" , text = "7.AddRig")
+        col8.operator("aw.addrig" , text = "7.AddRig(Rigify)")
         col8.operator("aw.bindrig" , text = "8.BindAllRig")
         col8.operator("aw.weightrig" , text = "9.WeightRig")
 
