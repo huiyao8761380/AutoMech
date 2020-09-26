@@ -217,7 +217,7 @@ class ApplyClean(bpy.types.Operator):
             #bpy.ops.uv.smart_project()
             #bpy.ops.object.mode_set(mode='OBJECT')
         bpy.context.space_data.overlay.show_face_orientation = False# 法线
-        bpy.ops.object.make_links_data(type='MODIFIERS')
+        #bpy.ops.object.make_links_data(type='MODIFIERS')
 
 
 
