@@ -1,5 +1,5 @@
 import bpy
-from easybpy import *
+from . easybpy import *
 #import sys
 #sys.path.append(r'C:/Users/Administrator/AppData/Roaming/Blender Foundation/Blender/2.82/scripts/addons/Bmesh clean 2_8x v1_1')
 #import __init__
