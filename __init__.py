@@ -5,7 +5,7 @@ bl_info = {
     "blender" : (2, 90, 1),
     "version" : (0, 0, 2),
     "location" : "View3D",
-    "warning" : "please rename addon to AutoMech",
+    "warning" : "If it can't use,please rename addon folder to AutoMech.",
     "category" : "Object"
 }
 
