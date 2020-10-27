@@ -24,7 +24,7 @@ class GenMech(bpy.types.Operator):
         for ob in sel:
             bpy.context.view_layer.objects.active = ob
             #for mod in [m for m in ob.modifiers if m.type != 'SKIN']:
-            if len(ob.data.vertices) <=2500:#防误触 顶点小于的时候才能运行
+            if len(ob.data.vertices) <=900000:#防误触 顶点小于的时候才能运行
 
                 #for m in ob.modifiers:
                     #if m.type != 'SKIN':
@@ -116,54 +116,7 @@ class GenMech(bpy.types.Operator):
                     mat4.specular_intensity = 0.45
                     mat4.roughness = 0.3
 
-                    #bpy.context.object.active_material.diffuse_color = (0.8, 0.49499, 0.655768, 1)
-                    #bpy.context.object.active_material.diffuse_color = (0.112115, 0.149903, 0.28101, 1)
-
-                #b = bpy.ops.material.new()
-                #c = bpy.data.materials["1"].node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.0753091, 0.07658, 0.0248376, 1)
-
-
-                Skin = ob.modifiers.get("Skin")
-                Remesh = ob.modifiers.get("Remesh")
-                Bevel = ob.modifiers.get("Bevel")
-                Decimate = ob.modifiers.get("Decimate")
-                Decimate2 = ob.modifiers.get("Decimate.001")
-                Bevel1 = ob.modifiers.get("Bevel.001")
-                EdgeSplit = ob.modifiers.get("EdgeSplit")
-                Solidify = ob.modifiers.get("Solidify")
-                Bevel2 = ob.modifiers.get("Bevel.002")
-                Mirror = ob.modifiers.get("Mirror")
-                Displace = ob.modifiers.get("Displace")
-
-                if Skin:
-                    ob.modifiers.remove(Skin)
-
-                if Remesh:
-                    ob.modifiers.remove(Remesh)
-
-                if Bevel:
-                    ob.modifiers.remove(Bevel)
-
-                if Decimate:
-                    ob.modifiers.remove(Decimate)
-
-                if Decimate2:
-                    ob.modifiers.remove(Decimate2)
-
-                if Bevel1:
-                    ob.modifiers.remove(Bevel1)
-
-                if EdgeSplit:
-                    ob.modifiers.remove(EdgeSplit)
-
-                if Solidify:
-                    ob.modifiers.remove(Solidify)
-
-                if Bevel2:
-                    ob.modifiers.remove(Bevel2)
-
-                if Displace:
-                    ob.modifiers.remove(Displace)
+                ob.modifiers.clear()
 
                 if amProperty.GenMechEnum =='GenMechfy1':
 
@@ -239,9 +192,9 @@ class GenMech(bpy.types.Operator):
                                 mod_Mirror.use_axis[0] = True
                                 mod_Mirror.use_axis[1] = False
                             
-                    else:
-                        if Mirror:
-                            ob.modifiers.remove(Mirror)
+                    #else:
+                        #if Mirror:
+                            #ob.modifiers.remove(Mirror)
 
 
                 elif amProperty.GenMechEnum =='GenMechfy2':
@@ -295,8 +248,6 @@ class GenMech(bpy.types.Operator):
                     mod_Displace.strength = 0.01#
 
                     if amProperty.GenMechMirrorBoll == True:
-                        if Mirror:
-                            ob.modifiers.remove(Mirror)
                         mod_Mirror = ob.modifiers.new("Mirror", "MIRROR")
                         if '_l' in ob.name:
                             mod_Mirror.use_axis[0] = False
@@ -312,10 +263,145 @@ class GenMech(bpy.types.Operator):
                             elif 'foot_l' in ob.name:
                                 mod_Mirror.use_axis[0] = True
                                 mod_Mirror.use_axis[1] = False
-                    else:
-                        if Mirror:
-                            ob.modifiers.remove(Mirror)
+                    #else:
+                        #if Mirror:
+                            #ob.modifiers.remove(Mirror)
                         
+                elif amProperty.GenMechEnum =='GenMechSpike':
+                    ob.modifiers.clear()
+                    Skin01 = ob.modifiers.new("Skin01", "SKIN")
+                    Remesh02 = ob.modifiers.new("Remesh02","REMESH")
+                    Displace03 = ob.modifiers.new("Displace03", "DISPLACE")
+                    Remesh04 = ob.modifiers.new("Remesh04", "REMESH")
+                    Cast05 = ob.modifiers.new("Cast05", "CAST")
+                    Cast06 = ob.modifiers.new("Cast06", "CAST")
+                    Simpledeform07 = ob.modifiers.new("Simpledeform07", "SIMPLE_DEFORM")
+                    Simpledeform08 = ob.modifiers.new("Simpledeform08", "SIMPLE_DEFORM")
+                    Simpledeform09 = ob.modifiers.new("Simpledeform09", "SIMPLE_DEFORM")
+                    Cast10 = ob.modifiers.new("Cast10", "CAST")
+                    Remesh11 = ob.modifiers.new("Remesh11", "REMESH")
+                    Decimate12 = ob.modifiers.new("Decimate12", "DECIMATE")
+                    Smooth13 = ob.modifiers.new("Smooth13", "SMOOTH")
+                    Bevel14 = ob.modifiers.new("Bevel14", "BEVEL")
+                    Decimate15 = ob.modifiers.new("Decimate15", "DECIMATE")
+                    Decimate16 = ob.modifiers.new("Decimate16", "DECIMATE")
+                    Bevel17 = ob.modifiers.new("Bevel17", "BEVEL")
+                    Edgesplit18 = ob.modifiers.new("Edgesplit18", "EDGE_SPLIT")
+                    Solidify19 = ob.modifiers.new("Solidify19", "SOLIDIFY")
+                    Bevel20 = ob.modifiers.new("Bevel20", "BEVEL")
+                    Displace21 = ob.modifiers.new("Displace21", "DISPLACE")
+                    Smooth22 = ob.modifiers.new("Smooth22", "SMOOTH")
+
+                    Skin01.show_viewport = False
+
+                    Remesh02.mode = 'SMOOTH'
+                    Remesh02.octree_depth = 4
+                    Remesh02.use_remove_disconnected = True
+                    Remesh02.scale = 0.9
+
+                    Remesh04.mode = 'SHARP'
+                    Remesh04.octree_depth = 5
+                    Remesh04.scale = 0.8
+                    Remesh04.sharpness = 1
+                    Remesh04.use_remove_disconnected = True
+
+                    Cast05.show_viewport = False
+                    Cast05.cast_type = 'CYLINDER'
+                    Cast05.factor = -1
+                    Cast05.radius = 0.5
+
+                    Cast06.show_viewport = False
+                    Cast06.cast_type = 'SPHERE'
+                    Cast06.factor = 4
+                    Cast06.radius = 0.5
+
+                    Simpledeform07.deform_method = 'TAPER'
+                    Simpledeform07.factor = 0.4
+                    Simpledeform07.deform_axis = 'Y'
+
+                    Simpledeform08.deform_method = 'BEND'#STRETCH
+                    #Simpledeform08.factor = 0.5
+                    Simpledeform08.angle = 0.523599
+                    Simpledeform08.deform_axis = 'Z'
+
+                    Simpledeform09.deform_method = 'TWIST'
+                    Simpledeform09.angle = 0.698132
+                    Simpledeform09.deform_axis = 'X'
+
+                    Cast10.cast_type = 'CUBOID'
+                    Cast10.factor = 0.6
+                    Cast10.radius = 0
+                    
+                    Remesh11.show_viewport = False
+                    Remesh11.mode = 'SMOOTH'
+                    Remesh11.octree_depth = 5
+                    Remesh11.scale = 0.9
+                    Remesh11.use_remove_disconnected = True
+
+                    Decimate12.decimate_type = 'COLLAPSE'
+                    Decimate12.ratio = 0.2048
+                    Decimate12.use_symmetry = False
+                    Decimate12.use_collapse_triangulate = False
+
+                    Smooth13.factor = 0.97
+                    Smooth13.iterations = 1
+                    Smooth13.use_x = True
+                    Smooth13.use_y = True
+                    Smooth13.use_z = True
+
+                    Bevel14.affect = 'VERTICES'
+                    Bevel14.offset_type = 'PERCENT'
+                    Bevel14.width_pct = 44
+                    Bevel14.segments = 1
+                    Bevel14.material = 1
+
+
+                    Decimate15.decimate_type = 'COLLAPSE'
+                    Decimate15.ratio = 0.02
+                    Decimate15.use_symmetry = False
+                    Decimate15.use_collapse_triangulate = False
+
+                    Decimate16.decimate_type = 'DISSOLVE'
+                    Decimate16.angle_limit = 0.0872665
+                    Decimate16.delimit = {'MATERIAL'}
+
+                    Bevel17.affect = 'VERTICES'
+                    Bevel17.offset_type = 'PERCENT'
+                    Bevel17.width_pct = 33
+                    Bevel17.segments = 1
+                    Bevel17.material = 3
+
+                    Edgesplit18.use_edge_angle = True
+                    Edgesplit18.use_edge_sharp = True
+                    Edgesplit18.split_angle = 0.523599
+
+                    Solidify19.solidify_mode = 'EXTRUDE'
+                    Solidify19.thickness = -0.02
+                    Solidify19.offset = -1
+                    Solidify19.use_even_offset = False
+                    Solidify19.use_rim = True
+                    Solidify19.use_rim_only = True
+                    Solidify19.material_offset_rim = 2
+
+
+                    Bevel20.affect = 'EDGES'
+                    Bevel20.offset_type = 'OFFSET'
+                    Bevel20.width = 0.05
+                    Bevel20.segments = 1
+                    Bevel20.material = 3
+
+                    Displace21.direction = 'NORMAL'
+                    Displace21.strength = 0.01
+                    Displace21.mid_level = 0.5
+
+                    Smooth22.factor = 0.5
+                    Smooth22.iterations = 3
+                    Smooth22.use_x = True
+                    Smooth22.use_y = True
+                    Smooth22.use_z = True
+
+                    if amProperty.GenMechMirrorBoll == True:
+                        ob.modifiers.new('mirror23','MIRROR')
 
 
             for mod in ob.modifiers:
@@ -395,5 +481,12 @@ class GenMech(bpy.types.Operator):
         #for selectobj in sel:
             #selectobj=bpy.ops.object.modifier_add(type='SKIN')
         '''
-        self.report({'INFO'}, "2.Gen Mech:如果物体顶点数小于2500执行")
+        self.report({'INFO'}, "2.Gen Mech:如果物体顶点数小于900000执行")
         return {'FINISHED'}
+
+#'DATA_TRANSFER', 'MESH_CACHE', 'MESH_SEQUENCE_CACHE', 'NORMAL_EDIT', 'WEIGHTED_NORMAL', 'UV_PROJECT', 'UV_WARP', 'VERTEX_WEIGHT_EDIT', 
+# 'VERTEX_WEIGHT_MIX', 'VERTEX_WEIGHT_PROXIMITY', 'ARRAY', 'BEVEL', 'BOOLEAN', 'BUILD', 'DECIMATE', 'EDGE_SPLIT', 'MASK', 'MIRROR', 
+# 'MULTIRES', 'REMESH', 'SCREW', 'SKIN', 'SOLIDIFY', 'SUBSURF', 'TRIANGULATE', 'WELD', 'WIREFRAME', 'ARMATURE', 'CAST', 'CURVE', 
+# 'DISPLACE', 'HOOK', 'LAPLACIANDEFORM', 'LATTICE', 'MESH_DEFORM', 'SHRINKWRAP', 'SIMPLE_DEFORM', 'SMOOTH', 'CORRECTIVE_SMOOTH', 
+# 'LAPLACIANSMOOTH', 'SURFACE_DEFORM', 'WARP', 'WAVE', 'CLOTH', 'COLLISION', 'DYNAMIC_PAINT', 'EXPLODE', 'FLUID', 'OCEAN', 
+# 'PARTICLE_INSTANCE', 'PARTICLE_SYSTEM', 'SOFT_BODY', 'SURFACE', 'SIMULATION'
